@@ -22,9 +22,7 @@ export default function About() {
           <h2 className="text-2xl font-bold text-gray-800">Tayyaba Amna</h2>
           <p className="text-lg text-blue-700 font-medium">MSc Maths, B.Ed</p>
           <p className="mt-4 text-gray-600">
-            A dedicated teacher and passionate educator with a focus on student growth and engagement. 
-            With years of experience in schools like Dar E Arqam and The Educators, she specializes in 
-            making complex topics simple and fun for students across Spain, USA, UK, and Australia.
+            A dedicated teacher and passionate educator with a focus on student growth and engagement. With 10 years of online teaching experience alongside years of classroom experience in schools like Dar E Arqam, The Educators, and Exalter Education System School, she specializes in making complex topics simple and fun for students across Spain, USA, UK, and Australia.
           </p>
         </div>
       </div>
@@ -33,8 +31,8 @@ export default function About() {
         <div className="bg-blue-50 p-6 rounded-lg">
           <h3 className="text-xl font-bold mb-4">Core Skills</h3>
           <ul className="list-disc ml-5 space-y-2 text-gray-700">
-            <li>AI Tools in Education</li>
-            <li>Canva Design</li>
+            <li>Student Growth</li>
+            <li>Student Learning</li>
             <li>Classroom Management</li>
             <li>Effective Communication</li>
           </ul>
