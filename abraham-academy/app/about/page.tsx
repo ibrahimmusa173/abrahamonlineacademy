@@ -17,7 +17,7 @@ export default function About() {
           <div className="w-full md:w-1/3">
              <div className="relative h-72 w-full rounded-xl overflow-hidden shadow-md bg-gray-100">
                 <Image 
-                  src="/teacher1.jfif" 
+                  src="/teacher1.jpg" 
                   alt="Tayyaba Amna" 
                   fill 
                   className="object-cover"
@@ -69,7 +69,7 @@ export default function About() {
           <div className="w-full md:w-1/3">
              <div className="relative h-72 w-full rounded-xl overflow-hidden shadow-md bg-gray-100">
                 <Image 
-                  src="/teacher.jfif" /* Update with your actual image path */
+                  src="/teacher.jpg" /* Update with your actual image path */
                   alt="Asia Aman" 
                   fill 
                   className="object-cover object-top"
