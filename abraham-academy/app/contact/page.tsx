@@ -115,8 +115,8 @@ export default function Contact() {
                 <h3 className="font-bold text-slate-900 text-sm mb-0.5">Campus & Office</h3>
                 <p className="text-slate-500 text-xs mb-1.5">Faizabad Campus</p>
                 <p className="text-slate-700 text-sm font-medium leading-snug">
-                  Flat No. 6, 3rd Floor, Green Valley Apartments,<br />
-                  Faizabad, Rawalpindi, Pakistan
+                  Office 8, 3rd Floor, Sarwar Plaza Shamsabad, Murree Road,<br />
+                   Rawalpindi, Pakistan
                 </p>
               </div>
             </div>

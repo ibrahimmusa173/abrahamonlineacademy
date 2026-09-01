@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="flex gap-5 mb-10">
           {[
             { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61593394480120", color: "hover:bg-blue-600" },
-            { icon: <FaLinkedinIn />, link: "#", color: "hover:bg-blue-700" },
+            { icon: <FaLinkedinIn />, link: "https://pk.linkedin.com/in/asia-aman-32bb6464", color: "hover:bg-blue-700" },
             { icon: <FaYoutube />, link: "https://www.youtube.com/@AbrahamOnlineAcademy", color: "hover:bg-red-600" },
           ].map((social, index) => (
             <Link 
