@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaFacebookF, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaLinkedinIn, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -12,6 +12,7 @@ export default function Footer() {
             { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61593394480120", color: "hover:bg-blue-600" },
             { icon: <FaLinkedinIn />, link: "https://pk.linkedin.com/in/asia-aman-32bb6464", color: "hover:bg-blue-700" },
             { icon: <FaYoutube />, link: "https://www.youtube.com/@AbrahamOnlineAcademy", color: "hover:bg-red-600" },
+            { icon: <FaInstagram />, link: "https://www.instagram.com/musa.aman.9883739", color: "hover:bg-pink-600" },
           ].map((social, index) => (
             <Link 
               key={index} 
