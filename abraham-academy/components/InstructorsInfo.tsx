@@ -15,7 +15,11 @@ export default function InstructorsInfo() {
         {/* Image Side */}
         <div className="w-full md:w-1/2">
           <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border-8 border-gray-50">
-            <Image src="/expert-teacher.png" alt="Study Desk" fill className="object-cover" />
+            <Image 
+            src="/expert-teacher.png" 
+            alt="Study Desk" 
+            fill 
+            className="object-cover" />
           </div>
         </div>
 
