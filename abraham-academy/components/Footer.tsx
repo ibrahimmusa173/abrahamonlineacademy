@@ -56,6 +56,10 @@ export default function Footer() {
             <li>
               <Link href="/courses" className="hover:text-yellow-500 transition-colors duration-300">Courses</Link>
             </li>
+            {/* Added Blog Link to Footer Navigation Grid */}
+            <li>
+              <Link href="/blog" className="hover:text-yellow-500 transition-colors duration-300">Blog & Guides</Link>
+            </li>
             <li>
               <Link href="/about" className="hover:text-yellow-500 transition-colors duration-300">About Us</Link>
             </li>

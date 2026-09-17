@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { blogPosts } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
   title: "Educational Blog & Exam Study Guides | Abraham Online Academy",
@@ -10,49 +11,37 @@ export const metadata: Metadata = {
   },
 };
 
-const posts = [
-  {
-    slug: "mastering-gcse-math-tips",
-    title: "How to Score Band 9 in GCSE Mathematics: 5 Exam Secrets",
-    snippet:
-      "Avoid common calculation traps and master multi-step problem solving with our certified tutors' breakdown.",
-    date: "2026-09-10",
-  },
-  {
-    slug: "why-coding-is-essential-for-kids",
-    title: "Why Kids Should Learn Python and Scratch Before Age 12",
-    snippet:
-      "Building computational logic early prepares students for high school computer science and future STEM careers.",
-    date: "2026-09-12",
-  },
-];
-
 export default function BlogHub() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-16 space-y-10">
       <div className="text-center space-y-3">
-        <h1 className="text-4xl font-extrabold text-[#001a41]">
-          Educational Blog & Study Guides
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#001a41]">
+          Educational Blog & Parent Guides
         </h1>
-        <p className="text-slate-600">
-          Expert advice, study tips, and curriculum breakdowns for students and parents.
+        <p className="text-slate-600 max-w-xl mx-auto text-sm sm:text-base">
+          Practical study strategies, IGCSE exam breakdowns, and guidance for families learning online.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {posts.map((post) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {blogPosts.map((post) => (
           <div
             key={post.slug}
-            className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
-              <span className="text-xs text-amber-600 font-semibold">{post.date}</span>
-              <h2 className="text-xl font-bold text-slate-900">{post.title}</h2>
-              <p className="text-slate-600 text-sm leading-relaxed">{post.snippet}</p>
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-amber-600 uppercase tracking-wider">{post.category}</span>
+                <span className="text-slate-400">{post.date}</span>
+              </div>
+              <h2 className="text-lg font-bold text-slate-900 leading-snug">{post.title}</h2>
+              <p className="text-slate-600 text-xs line-clamp-3 leading-relaxed">
+                {post.metaDescription}
+              </p>
             </div>
             <Link
               href={`/blog/${post.slug}`}
-              className="mt-6 text-sm font-bold text-amber-600 hover:underline"
+              className="mt-6 text-xs font-bold text-[#001a41] hover:text-amber-600 flex items-center gap-1"
             >
               Read Full Article →
             </Link>
