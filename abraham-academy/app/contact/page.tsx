@@ -1,3 +1,12 @@
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Contact Us & Book a Free Trial Class | WhatsApp Support",
+  description:
+    "Get in touch with Abraham Online Academy. Book a 100% Free 1-on-1 Trial Class via WhatsApp (+92 313 5061127) or email tayyabamusa747@gmail.com.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/contact",
+  },
+};
 import { 
   FaWhatsapp, 
   FaEnvelope, 

@@ -9,14 +9,37 @@ export default function Footer() {
         {/* 1. ADVANCED SOCIAL ICONS */}
         <div className="flex gap-5 mb-10">
           {[
-            { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61593394480120", color: "hover:bg-blue-600" },
-            { icon: <FaLinkedinIn />, link: "https://pk.linkedin.com/in/asia-aman-32bb6464", color: "hover:bg-blue-700" },
-            { icon: <FaYoutube />, link: "https://www.youtube.com/@AbrahamOnlineAcademy", color: "hover:bg-red-600" },
-            { icon: <FaInstagram />, link: "https://www.instagram.com/musa.aman.9883739", color: "hover:bg-pink-600" },
+            { 
+              icon: <FaFacebookF />, 
+              link: "https://www.facebook.com/profile.php?id=61593394480120", 
+              color: "hover:bg-blue-600",
+              ariaLabel: "Visit our Facebook page"
+            },
+            { 
+              icon: <FaLinkedinIn />, 
+              link: "https://pk.linkedin.com/in/asia-aman-32bb6464", 
+              color: "hover:bg-blue-700",
+              ariaLabel: "Connect with us on LinkedIn" 
+            },
+            { 
+              icon: <FaYoutube />, 
+              link: "https://www.youtube.com/@AbrahamOnlineAcademy", 
+              color: "hover:bg-red-600",
+              ariaLabel: "Watch free classes on YouTube" 
+            },
+            { 
+              icon: <FaInstagram />, 
+              link: "https://www.instagram.com/musa.aman.9883739", 
+              color: "hover:bg-pink-600",
+              ariaLabel: "Follow us on Instagram" 
+            },
           ].map((social, index) => (
             <Link 
               key={index} 
               href={social.link}
+              aria-label={social.ariaLabel}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl transition-all duration-300 hover:-translate-y-2 shadow-lg ${social.color} hover:text-white`}
             >
               {social.icon}
@@ -39,7 +62,6 @@ export default function Footer() {
             <li>
               <Link href="/contact" className="hover:text-yellow-500 transition-colors duration-300">Contact Us</Link>
             </li>
-            
           </ul>
         </nav>
 
@@ -48,8 +70,6 @@ export default function Footer() {
           Empowering students globally with the best online education system. Quality education for a better future.
         </div>
       </div>
-
-      
     </footer>
   );
 }

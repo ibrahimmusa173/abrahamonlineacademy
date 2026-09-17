@@ -1,4 +1,15 @@
+import { Metadata } from "next";
 import React from 'react';
+
+export const metadata: Metadata = {
+  title: "Courses & Curricula | GCSE, IGCSE, Common Core, ACARA & Tajweed",
+  description:
+    "Explore interactive courses in Mathematics, Physics, Chemistry, Computer Science, English, and Tajweed aligned with UK, USA, UAE, and Australian standards.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/courses",
+  },
+};
+
 import { 
   FaSquareRootAlt, 
   FaAtom, 
