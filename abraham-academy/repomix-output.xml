@@ -43,19 +43,30 @@ The content is organized as follows:
 .gitignore
 AGENTS.md
 app/about/page.tsx
+app/blog/[slug]/page.tsx
+app/blog/page.tsx
 app/contact/page.tsx
+app/courses/[subject]/page.tsx
 app/courses/page.tsx
 app/favicon.ico
 app/globals.css
+app/landing/[country]/page.tsx
 app/layout.tsx
 app/page.tsx
+app/robots.ts
+app/sitemap.ts
+app/uae-tutoring/page.tsx
+app/usa-tutoring/page.tsx
 CLAUDE.md
 components/Footer.tsx
 components/Hero.tsx
 components/InstructorsInfo.tsx
 components/Navbar.tsx
+components/SchemaMarkup.tsx
 components/TrustBar.tsx
 eslint.config.mjs
+lib/blog-data.ts
+lib/courses-data.ts
 next.config.ts
 package.json
 postcss.config.mjs
@@ -129,19 +140,38 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 </file>
 
 <file path="app/about/page.tsx">
+import { Metadata } from "next";
 import Image from 'next/image';
+
+export const metadata: Metadata = {
+  title: "About Our Founders & Mission | Certified Tutors",
+  description:
+    "Meet Tayyaba Amna (MSc Maths, B.Ed) and Asia Aman (MS Electrical Eng.). 10+ years of global online teaching experience serving students in Spain, USA, UK, and Australia.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/about",
+  },
+};
 
 export default function About() {
   return (
     <div className="container mx-auto p-8 max-w-5xl space-y-20">
       
       {/* =========================================
+          MAIN PAGE H1 
+          ========================================= */}
+      <div className="pt-8 text-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#1e3a8a]">
+          Leadership & Vision at Abraham Online Academy
+        </h1>
+      </div>
+
+      {/* =========================================
           FIRST PROFILE: TAYYABA AMNA (FOUNDER) 
           ========================================= */}
       <section>
-        <h1 className="text-4xl font-bold text-[#1e3a8a] mb-8 border-b-2 border-yellow-500 pb-3">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a] mb-8 border-b-2 border-yellow-500 pb-3">
           About Our Founder
-        </h1>
+        </h2>
         
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Image */}
@@ -158,7 +188,7 @@ export default function About() {
 
           {/* Bio */}
           <div className="w-full md:w-2/3">
-            <h2 className="text-2xl font-bold text-gray-900">Tayyaba Amna</h2>
+            <h3 className="text-2xl font-bold text-gray-900">Tayyaba Amna</h3>
             <p className="text-lg text-blue-600 font-medium mb-4">MSc Maths, B.Ed</p>
             <p className="text-gray-600 leading-relaxed text-justify">
               A dedicated teacher and passionate educator with a focus on student growth and engagement. With 10 years of online teaching experience alongside years of classroom experience in schools like Dar E Arqam, The Educators, and Exalter Education System School, she specializes in making complex topics simple and fun for students across Spain, USA, UK, and Australia.
@@ -169,7 +199,7 @@ export default function About() {
         {/* Cards */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#f0f4f8] p-8 rounded-xl shadow-sm">
-            <h3 className="text-xl font-bold mb-4 text-gray-900">Core Skills</h3>
+            <h4 className="text-xl font-bold mb-4 text-gray-900">Core Skills</h4>
             <ul className="list-disc ml-5 space-y-2 text-gray-700">
               <li>Student Growth</li>
               <li>Student Learning</li>
@@ -178,7 +208,7 @@ export default function About() {
             </ul>
           </div>
           <div className="bg-[#fefce8] p-8 rounded-xl shadow-sm">
-            <h3 className="text-xl font-bold mb-4 text-gray-900">Our Mission</h3>
+            <h4 className="text-xl font-bold mb-4 text-gray-900">Our Mission</h4>
             <p className="text-gray-700 italic text-justify">
               Learn Today, Lead Tomorrow. Providing quality education for a better future globally.
             </p>
@@ -186,21 +216,20 @@ export default function About() {
         </div>
       </section>
 
-
       {/* =========================================
           SECOND PROFILE: ASIA AMAN (MANAGING DIR.) 
           ========================================= */}
       <section>
-        <h1 className="text-4xl font-bold text-[#1e3a8a] mb-8 border-b-2 border-yellow-500 pb-3">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a] mb-8 border-b-2 border-yellow-500 pb-3">
           About Our Managing Director
-        </h1>
+        </h2>
         
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Image */}
           <div className="w-full md:w-1/3">
              <div className="relative h-72 w-full rounded-xl overflow-hidden shadow-md bg-gray-100">
                 <Image 
-                  src="/teacher.jpg" /* Update with your actual image path */
+                  src="/teacher.jpg" 
                   alt="Asia Aman" 
                   fill 
                   className="object-cover object-top"
@@ -210,7 +239,7 @@ export default function About() {
 
           {/* Bio */}
           <div className="w-full md:w-2/3">
-            <h2 className="text-2xl font-bold text-gray-900">Asia Aman</h2>
+            <h3 className="text-2xl font-bold text-gray-900">Asia Aman</h3>
             <p className="text-lg text-blue-600 font-medium mb-4">MS Electrical Engineering, BS Computer Engineering</p>
             <p className="text-gray-600 leading-relaxed text-justify">
               A visionary leader driving technical innovation and operational excellence. Leveraging a strong engineering background, Asia bridges the gap between technology and operations, ensuring scalable processes, strategic management, and a robust infrastructure to support our global educational mission.
@@ -221,7 +250,7 @@ export default function About() {
         {/* Cards */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#f0f4f8] p-8 rounded-xl shadow-sm">
-            <h3 className="text-xl font-bold mb-4 text-gray-900">Core Skills</h3>
+            <h4 className="text-xl font-bold mb-4 text-gray-900">Core Skills</h4>
             <ul className="list-disc ml-5 space-y-2 text-gray-700">
               <li>Systems Architecture</li>
               <li>Technical Leadership</li>
@@ -230,7 +259,7 @@ export default function About() {
             </ul>
           </div>
           <div className="bg-[#fefce8] p-8 rounded-xl shadow-sm">
-            <h3 className="text-xl font-bold mb-4 text-gray-900">Our Vision</h3>
+            <h4 className="text-xl font-bold mb-4 text-gray-900">Our Vision</h4>
             <p className="text-gray-700 italic text-justify">
               Integrating cutting-edge technology and efficient systems to empower education and foster continuous global learning.
             </p>
@@ -243,7 +272,169 @@ export default function About() {
 }
 </file>
 
+<file path="app/blog/[slug]/page.tsx">
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { blogPosts } from "@/lib/blog-data";
+import { FaWhatsapp, FaArrowLeft } from "react-icons/fa";
+
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
+
+  if (!post) return {};
+
+  return {
+    title: `${post.title} | Abraham Online Academy`,
+    description: post.metaDescription,
+    alternates: {
+      canonical: `https://abrahamonlineacademy.vercel.app/blog/${post.slug}`,
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const whatsappUrl =
+    "https://wa.me/923149500765?text=" +
+    encodeURIComponent(`Hi! I read your article "${post.title}" and would like to ask about a Free Trial Class.`);
+
+  return (
+    <article className="min-h-screen bg-slate-50 py-12 px-4">
+      <div className="max-w-3xl mx-auto space-y-8">
+        {/* Back Button */}
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-[#001a41] transition-colors"
+        >
+          <FaArrowLeft />
+          <span>Back to All Articles</span>
+        </Link>
+
+        {/* Article Header */}
+        <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <div className="flex items-center gap-3 text-xs">
+            <span className="bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full">
+              {post.category}
+            </span>
+            <span className="text-slate-400">• Published {post.date}</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#001a41] leading-tight">
+            {post.title}
+          </h1>
+
+          <p className="text-slate-600 text-sm italic border-l-4 border-amber-500 pl-4 py-1">
+            {post.metaDescription}
+          </p>
+        </div>
+
+        {/* Article Content Body */}
+        <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-sm">
+          <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-6 text-sm sm:text-base whitespace-pre-line">
+            {post.content}
+          </div>
+        </div>
+
+        {/* Bottom CTA Box */}
+        <div className="bg-[#001a41] text-white p-8 rounded-3xl text-center space-y-4 shadow-lg">
+          <h3 className="text-xl font-bold">Want 1-on-1 Academic Help for Your Child?</h3>
+          <p className="text-slate-300 text-xs sm:text-sm max-w-lg mx-auto">
+            Book a 100% Free Trial Class with certified expert tutors at Abraham Online Academy.
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3 px-6 rounded-xl text-sm transition-all"
+          >
+            <FaWhatsapp className="text-lg" />
+            <span>Book Free Trial via WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}
+</file>
+
+<file path="app/blog/page.tsx">
+import { Metadata } from "next";
+import Link from "next/link";
+import { blogPosts } from "@/lib/blog-data";
+
+export const metadata: Metadata = {
+  title: "Educational Blog & Exam Study Guides | Abraham Online Academy",
+  description:
+    "Free study guides, exam preparation tips for GCSE/SAT, mental math hacks, and online learning insights for parents.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/blog",
+  },
+};
+
+export default function BlogHub() {
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-16 space-y-10">
+      <div className="text-center space-y-3">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#001a41]">
+          Educational Blog & Parent Guides
+        </h1>
+        <p className="text-slate-600 max-w-xl mx-auto text-sm sm:text-base">
+          Practical study strategies, IGCSE exam breakdowns, and guidance for families learning online.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {blogPosts.map((post) => (
+          <div
+            key={post.slug}
+            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-amber-600 uppercase tracking-wider">{post.category}</span>
+                <span className="text-slate-400">{post.date}</span>
+              </div>
+              <h2 className="text-lg font-bold text-slate-900 leading-snug">{post.title}</h2>
+              <p className="text-slate-600 text-xs line-clamp-3 leading-relaxed">
+                {post.metaDescription}
+              </p>
+            </div>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="mt-6 text-xs font-bold text-[#001a41] hover:text-amber-600 flex items-center gap-1"
+            >
+              Read Full Article →
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+</file>
+
 <file path="app/contact/page.tsx">
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Contact Us & Book a Free Trial Class | WhatsApp Support",
+  description:
+    "Get in touch with Abraham Online Academy. Book a 100% Free 1-on-1 Trial Class via WhatsApp (+92 313 5061127) or email tayyabamusa747@gmail.com.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/contact",
+  },
+};
 import { 
   FaWhatsapp, 
   FaEnvelope, 
@@ -398,8 +589,279 @@ export default function Contact() {
 }
 </file>
 
-<file path="app/courses/page.tsx">
+<file path="app/courses/[subject]/page.tsx">
 import React from 'react';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { coursesData } from '@/lib/courses-data';
+import { 
+  FaWhatsapp, 
+  FaCheckCircle, 
+  FaCalculator, 
+  FaGlobe, 
+  FaUserGraduate, 
+  FaChalkboardTeacher, 
+  FaClock, 
+  FaChevronDown 
+} from 'react-icons/fa';
+
+interface Props {
+  params: Promise<{ subject: string }>;
+}
+
+// 1. Generate Static Paths for Fast Page Loading
+export async function generateStaticParams() {
+  return Object.keys(coursesData).map((slug) => ({
+    subject: slug,
+  }));
+}
+
+// 2. Dynamic SEO Metadata for Each Subject
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { subject } = await params;
+  const course = coursesData[subject.toLowerCase()];
+
+  if (!course) return {};
+
+  return {
+    title: course.metaTitle,
+    description: course.metaDescription,
+    alternates: {
+      canonical: `https://abrahamonlineacademy.vercel.app/courses/${course.slug}`,
+    },
+  };
+}
+
+// 3. Dynamic Page Component
+export default async function DynamicCoursePage({ params }: Props) {
+  const { subject } = await params;
+  const course = coursesData[subject.toLowerCase()];
+
+  if (!course) {
+    notFound();
+  }
+
+  const whatsappUrl =
+    "https://wa.me/923149500765?text=" +
+    encodeURIComponent(`Hi! I would like to inquire about 1-on-1 ${course.slug.toUpperCase()} tutoring for my child.`);
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      
+      {/* 1. HERO SECTION */}
+      <section className="bg-[#001a41] text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full">
+            <FaCalculator className="text-amber-400" />
+            <span>Grades 1–12 • 1-on-1 Personal Coaching</span>
+          </div>
+          
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            {course.title}
+          </h1>
+          
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            {course.subtitle}
+          </p>
+
+          {/* Dual CTA */}
+          <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="https://abrahamonlineacademy.vercel.app"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            >
+              Book 100% Free Trial Class
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            >
+              <FaWhatsapp className="text-xl" />
+              <span>Chat with Academic Coordinator</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. INTERNATIONAL CURRICULUMS WE SUPPORT */}
+      <section className="py-16 px-4 max-w-5xl mx-auto space-y-10">
+        <div className="text-center space-y-3">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#001a41]">
+            International Curriculums We Support
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+            Every region has specific standards and exam traps. Our tutors are trained to teach exactly what your child needs to know to ace their board exams.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {course.curriculums.map((curr, index) => (
+            <div
+              key={index}
+              className={`bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3 ${
+                index === course.curriculums.length - 1 && course.curriculums.length % 3 !== 0
+                  ? 'col-span-1 md:col-span-2 lg:col-span-2'
+                  : ''
+              }`}
+            >
+              <div className="text-amber-600 font-bold text-lg flex items-center gap-2">
+                <FaGlobe /> {curr.name}
+              </div>
+              <p className="text-slate-600 text-xs sm:text-sm">{curr.detail}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. CORE SUBJECT PILLARS */}
+      <section className="bg-slate-100 py-16 px-4 border-y border-slate-200">
+        <div className="max-w-5xl mx-auto space-y-10">
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[#001a41]">
+              {course.pillarsTitle}
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+              {course.pillarsDescription}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {course.pillars.map((pillar, index) => (
+              <div key={index} className="bg-white p-6 rounded-2xl border border-slate-200 space-y-2">
+                <h3 className="font-bold text-slate-900 text-base">{pillar.name}</h3>
+                <p className="text-slate-600 text-xs sm:text-sm">{pillar.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. TAILORED LEARNING PHASES */}
+      <section className="py-16 px-4 max-w-5xl mx-auto space-y-12">
+        <div className="text-center space-y-3">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#001a41]">
+            Tailored Learning Phases for Every Age Group
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+            Teaching methods designed specifically for your childs developmental stage.
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          {course.agePhases.map((phase, index) => (
+            <div key={index} className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-6 items-start">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0 ${phase.iconColor}`}>
+                {index === 0 ? <FaUserGraduate /> : index === 1 ? <FaChalkboardTeacher /> : <FaCalculator />}
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-slate-900">{phase.phase}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">{phase.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. WHY CHOOSE ABRAHAM ONLINE ACADEMY */}
+      <section className="bg-[#001a41] text-white py-16 px-4">
+        <div className="max-w-5xl mx-auto space-y-10">
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl sm:text-4xl font-bold">
+              Why Choose Abraham Online Academy?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white/5 border border-white/10 p-6 rounded-2xl space-y-3">
+              <FaCheckCircle className="text-amber-400 text-2xl" />
+              <h3 className="text-lg font-bold">Undivided 1-on-1 Attention</h3>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                No crowded classrooms or distraction. The tutor moves entirely at your childs pace, spending extra time on tough concepts.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 p-6 rounded-2xl space-y-3">
+              <FaChalkboardTeacher className="text-amber-400 text-2xl" />
+              <h3 className="text-lg font-bold">Digital Whiteboard Tech</h3>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Interactive, real-time problem solving where the student and tutor write, solve, and annotate step-by-step together on screen.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 p-6 rounded-2xl space-y-3">
+              <FaClock className="text-amber-400 text-2xl" />
+              <h3 className="text-lg font-bold">Flexible Global Scheduling</h3>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Select class times that match your familys routine, whether you are in EST, PST, GST, or AEST time zones.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. FREQUENTLY ASKED QUESTIONS */}
+      <section className="py-16 px-4 max-w-4xl mx-auto space-y-8">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#001a41]">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-slate-600 text-sm">Common questions parents ask about our online classes.</p>
+        </div>
+
+        <div className="space-y-4">
+          {course.faqs.map((faq, index) => (
+            <details key={index} className="bg-white p-6 rounded-2xl border border-slate-200 cursor-pointer group">
+              <summary className="font-bold text-slate-900 flex justify-between items-center list-none">
+                <span>{faq.question}</span>
+                <FaChevronDown className="text-slate-400 group-open:rotate-180 transition-transform text-sm" />
+              </summary>
+              <p className="mt-4 text-slate-600 text-xs sm:text-sm leading-relaxed">
+                {faq.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. FINAL CALL TO ACTION */}
+      <section className="bg-slate-900 text-white py-16 px-4 text-center">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h2 className="text-2xl sm:text-4xl font-extrabold">Ready to Experience the Difference?</h2>
+          <p className="text-slate-300 text-sm sm:text-base">
+            Book a 100% Free 1-on-1 Trial Class with a certified tutor today.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="https://abrahamonlineacademy.vercel.app"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            >
+              Book Your 100% Free Trial Class Today
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            >
+              <FaWhatsapp className="text-xl" />
+              <span>Connect on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  );
+}
+</file>
+
+<file path="app/courses/page.tsx">
+import { Metadata } from "next";
+import React from 'react';
+import Link from 'next/link';
 import { 
   FaSquareRootAlt, 
   FaAtom, 
@@ -414,54 +876,80 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 
-const subjects = [
+export const metadata: Metadata = {
+  title: "Courses & Curricula | GCSE, IGCSE, Common Core, ACARA & Tajweed",
+  description:
+    "Explore interactive courses in Mathematics, Physics, Chemistry, Computer Science, English, and Tajweed aligned with UK, USA, UAE, and Australian standards.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/courses",
+  },
+};
+
+// Define the type for your subjects to prevent TypeScript 'any' errors
+interface Subject {
+  name: string;
+  icon: React.ElementType;
+  desc: string;
+  accent: string;
+  href?: string;
+}
+
+const subjects: Subject[] = [
   { 
     name: "Mathematics", 
     icon: FaSquareRootAlt, 
     desc: "Algebra, Calculus & Geometry tailored to your regional curriculum.",
-    accent: "from-blue-600 to-indigo-600"
+    accent: "from-blue-600 to-indigo-600",
+    href: "/courses/mathematics"
   },
   { 
     name: "Physics", 
     icon: FaAtom, 
     desc: "Mechanics, energy, electricity, and wave theory simplified.",
-    accent: "from-purple-600 to-indigo-600"
+    accent: "from-purple-600 to-indigo-600",
+    href: "/courses/physics"
   },
   { 
     name: "Chemistry", 
     icon: FaFlask, 
     desc: "Atomic models, stoichiometry, and organic reactions step-by-step.",
-    accent: "from-emerald-600 to-teal-600"
+    accent: "from-emerald-600 to-teal-600",
+    href: "/courses/chemistry"
   },
   { 
     name: "Computer Science", 
     icon: FaLaptopCode, 
     desc: "Python programming, computational logic, and digital literacy.",
-    accent: "from-cyan-600 to-blue-600"
+    accent: "from-cyan-600 to-blue-600",
+    href: "/courses/coding"
   },
   { 
     name: "English Language", 
     icon: FaBookOpen, 
     desc: "Grammar, literature analysis, and expressive creative writing.",
-    accent: "from-amber-600 to-orange-600"
+    accent: "from-amber-600 to-orange-600",
+    href: "/courses/english"
   },
   { 
     name: "Urdu Language", 
     icon: FaPenNib, 
     desc: "Reading comprehension, formal writing, and conversational fluency.",
-    accent: "from-teal-600 to-emerald-600"
+    accent: "from-teal-600 to-emerald-600",
+    href: "/courses/urdu"
   },
   { 
     name: "Islamiat & Hifz", 
     icon: FaMosque, 
     desc: "Quran recitation, Tajweed rules, ethics, and foundational history.",
-    accent: "from-amber-500 to-yellow-600"
+    accent: "from-amber-500 to-yellow-600",
+    href: "/courses/islamiat"
   },
   { 
     name: "Biology", 
     icon: FaDna, 
     desc: "Cell biology, physiology, genetics, and living systems.",
-    accent: "from-rose-600 to-pink-600"
+    accent: "from-rose-600 to-pink-600",
+    href: "/courses/biology"
   },
 ];
 
@@ -489,7 +977,6 @@ export default function Courses() {
       
       {/* 1. COMPACT HERO HEADER */}
       <section className="relative overflow-hidden bg-[#0A192F] py-10 px-2 text-center text-white">
-        {/* Soft Amber Ambient Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10 max-w-2xl mx-auto space-y-3">
@@ -554,17 +1041,16 @@ export default function Courses() {
           {subjects.map((subject, index) => {
             const Icon = subject.icon;
             return (
-              <div 
+              <Link 
                 key={index}
+                href={subject.href || "#"}
                 className="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-slate-300 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  {/* Icon */}
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${subject.accent} flex items-center justify-center text-white text-xl shadow-md mb-5 group-hover:scale-105 transition-transform duration-300`}>
                     <Icon />
                   </div>
 
-                  {/* Title & Description */}
                   <h3 className="text-lg font-bold text-[#0A192F] mb-2 group-hover:text-amber-600 transition-colors">
                     {subject.name}
                   </h3>
@@ -573,12 +1059,11 @@ export default function Courses() {
                   </p>
                 </div>
 
-                {/* Footer link */}
                 <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-[#0A192F] transition-colors">
                   <span>Grade 1 – 12</span>
                   <FaArrowRight className="text-[10px] transition-transform duration-200 group-hover:translate-x-1 text-amber-500" />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -588,7 +1073,6 @@ export default function Courses() {
       <section className="bg-slate-50 border-t border-slate-200/70 py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left Highlights */}
           <div className="lg:col-span-7 space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200/70 px-3 py-1 rounded-full">
               Why Learn With Us
@@ -608,7 +1092,6 @@ export default function Courses() {
             </div>
           </div>
 
-          {/* Right Direct CTA Card */}
           <div className="lg:col-span-5 bg-[#0A192F] rounded-2xl p-7 text-center text-white shadow-lg space-y-4 border border-slate-800">
             <h4 className="text-xl font-bold">Have Questions or Special Requests?</h4>
             <p className="text-slate-300 text-xs leading-relaxed">
@@ -662,40 +1145,667 @@ body {
 }
 </file>
 
-<file path="app/layout.tsx">
-import './globals.css'
-import Navbar from '@/components/Navbar'
+<file path="app/landing/[country]/page.tsx">
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { FaWhatsapp, FaCheckCircle } from "react-icons/fa";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+interface Props {
+  params: Promise<{ country: string }>;
+}
+
+const countryData: Record<
+  string,
+  { title: string; subtitle: string; curriculum: string; flag: string }
+> = {
+  usa: {
+    title: "Online Math & Science Tutoring in the USA",
+    subtitle: "Common Core, AP & SAT Preparation for Grades 1–12",
+    curriculum: "US Common Core & AP Standards",
+    flag: "🇺🇸",
+  },
+  uae: {
+    title: "1-on-1 Virtual Tutors in UAE (Dubai, Abu Dhabi)",
+    subtitle: "British GCSE/IGCSE, IB & MOE Curriculum Coaching",
+    curriculum: "IGCSE, GCSE & IB Frameworks",
+    flag: "🇦🇪",
+  },
+  australia: {
+    title: "Online Tutoring for Australian Students (Yr 1–12)",
+    subtitle: "ACARA Curriculum, NAPLAN & ATAR Prep",
+    curriculum: "ACARA & Senior Secondary",
+    flag: "🇦🇺",
+  },
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { country } = await params;
+  const data = countryData[country.toLowerCase()];
+  if (!data) return {};
+
+  return {
+    title: `${data.title} | Abraham Online Academy`,
+    description: `${data.subtitle}. Personalized 1-on-1 online classes with certified tutors. Book a free trial!`,
+    alternates: {
+      canonical: `https://abrahamonlineacademy.vercel.app/landing/${country}`,
+    },
+  };
+}
+
+export default async function CountryLandingPage({ params }: Props) {
+  const { country } = await params;
+  const data = countryData[country.toLowerCase()];
+  if (!data) notFound();
+
+  const whatsappUrl = "https://wa.me/923135061127?text=" + encodeURIComponent(`Hi! I am located in ${country.toUpperCase()} and interested in a Free Trial Class.`);
+
   return (
-    <html lang="en">
-      <body>
+    <div className="min-h-screen bg-slate-50 py-16 px-4">
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-100 text-center space-y-6">
+        <span className="text-4xl">{data.flag}</span>
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-[#001a41]">
+          {data.title}
+        </h1>
+        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          {data.subtitle}
+        </p>
+
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-left max-w-lg mx-auto space-y-3">
+          <h2 className="font-bold text-amber-900 text-base">Program Features:</h2>
+          <div className="flex items-center gap-3 text-sm text-slate-700">
+            <FaCheckCircle className="text-amber-500 flex-shrink-0" />
+            <span>Aligned with {data.curriculum}</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-slate-700">
+            <FaCheckCircle className="text-amber-500 flex-shrink-0" />
+            <span>Flexible scheduling matching your local time zone</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-slate-700">
+            <FaCheckCircle className="text-amber-500 flex-shrink-0" />
+            <span>1-on-1 personalized guidance & weekly progress logs</span>
+          </div>
+        </div>
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-lg transition-all"
+        >
+          <FaWhatsapp className="text-2xl" />
+          <span>Book Free Trial via WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata, Viewport } from "next";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import SchemaMarkup from "../components/SchemaMarkup";
+import "./globals.css";
+
+const siteUrl = "https://abrahamonlineacademy.vercel.app";
+
+export const viewport: Viewport = {
+  themeColor: "#001a41",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Abraham Online Academy | Global Education Without Borders (Grades 1–12)",
+    template: "%s | Abraham Online Academy",
+  },
+  description:
+    "World-class virtual education for Grades 1–12 across the UK, UAE, USA, Canada, Australia, and Saudi Arabia. Certified expert 1-on-1 tutors in Math, Science, Coding, English & Tajweed.",
+  keywords: [
+    "Abraham Online Academy",
+    "Online Tutoring Grades 1-12",
+    "Global Virtual School",
+    "GCSE IGCSE Math Tutor",
+    "AP SAT Preparation Online",
+    "Learn Coding for Kids Python",
+    "Online Tajweed and Quran Classes",
+    "UK UAE USA Online School",
+    "Personalized 1-on-1 Tutoring",
+  ],
+  authors: [{ name: "Tayyaba Amna (Founder)", url: siteUrl }],
+  creator: "Abraham Online Academy",
+  publisher: "Abraham Online Academy",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "Abraham Online Academy",
+    title: "Abraham Online Academy | Global Education Without Borders",
+    description:
+      "Empowering Grade 1–12 students globally with certified expert tutors in Math, Physics, Chemistry, Coding, English, and Tajweed.",
+    images: [
+      {
+        url: `${siteUrl}/banner.png`,
+        width: 1200,
+        height: 630,
+        alt: "Abraham Online Academy - Global Education Without Borders",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Abraham Online Academy | Global Virtual Tutoring (Grades 1–12)",
+    description:
+      "High-impact 1-on-1 virtual learning for students in the UK, UAE, USA, Canada, and Australia.",
+    images: [`${siteUrl}/banner.png`],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <SchemaMarkup />
+      </head>
+      <body className="antialiased bg-white text-slate-900 font-sans">
         <Navbar />
-        {children}
-        <footer className="bg-gray-900 text-white text-center p-8">
-          <p>© 2024 Abraham Online Academy. Learn Today, Lead Tomorrow.</p>
-        </footer>
+        <main id="main-content">{children}</main>
+        <Footer />
       </body>
     </html>
-  )
+  );
 }
 </file>
 
 <file path="app/page.tsx">
-import Hero from '../components/Hero'
-import TrustBar from '../components/TrustBar'
-import InstructorsInfo from '../components/InstructorsInfo'
-import Footer from '@/components/Footer'
+import { Metadata } from "next";
+import Link from 'next/link';
+import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
+import InstructorsInfo from "@/components/InstructorsInfo";
+import { blogPosts } from '@/lib/blog-data';
+
+export const metadata: Metadata = {
+  title: "Online Tutoring for Grades 1–12 | Math, Science, Coding & Tajweed",
+  description:
+    "Unlock academic success from home! Abraham Online Academy offers certified 1-on-1 virtual tutoring tailored for UK, UAE, USA, and global curricula.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app",
+  },
+};
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
       <TrustBar />
       <InstructorsInfo />
-      <Footer />
-    </main>
-  )
+      
+      {/* =========================================
+          LATEST ARTICLES PREVIEW SECTION
+          ========================================= */}
+      <section className="py-16 bg-slate-50 border-t border-slate-200 px-4">
+        <div className="max-w-5xl mx-auto space-y-10">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold text-[#001a41]">
+              Parent Guides & Exam Study Tips
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base">
+              Read our latest articles on IGCSE preparation, coding logic, and Tajweed learning.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {blogPosts.map((post) => (
+              <div key={post.slug} className="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
+                <div className="space-y-3">
+                  <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">{post.category}</span>
+                  <h3 className="text-base font-bold text-slate-900 leading-snug">{post.title}</h3>
+                  <p className="text-slate-600 text-xs line-clamp-3 leading-relaxed">{post.metaDescription}</p>
+                </div>
+                <Link 
+                  href={`/blog/${post.slug}`} 
+                  className="mt-4 text-xs font-bold text-[#001a41] hover:text-amber-600 flex items-center gap-1"
+                >
+                  Read Article →
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link 
+              href="/blog" 
+              className="inline-flex items-center gap-2 bg-[#001a41] hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-xl text-sm transition-all"
+            >
+              View All Articles
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+</file>
+
+<file path="app/robots.ts">
+import { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  const baseUrl = "https://abrahamonlineacademy.vercel.app";
+
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/admin/"],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
+  };
+}
+</file>
+
+<file path="app/sitemap.ts">
+import { MetadataRoute } from "next";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = "https://abrahamonlineacademy.vercel.app";
+
+  // Core Static Pages
+  const staticRoutes = [
+    "",
+    "/about",
+    "/courses",
+    "/contact",
+    "/blog",
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: route === "" ? ("daily" as const) : ("weekly" as const),
+    priority: route === "" ? 1.0 : 0.8,
+  }));
+
+  // Targeted Country Landing Pages
+  const countryRoutes = [
+    "/landing/usa",
+    "/landing/uae",
+    "/landing/uk",
+    "/landing/canada",
+    "/landing/australia",
+    "/landing/saudi-arabia",
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
+  }));
+
+  // Dynamic Blog Posts (Mock Array - Connect to your CMS/DB)
+  const blogPosts = [
+    "mastering-gcse-math-tips",
+    "how-to-score-800-sat-math",
+    "why-coding-is-essential-for-kids",
+  ].map((slug) => ({
+    url: `${baseUrl}/blog/${slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...countryRoutes, ...blogPosts];
+}
+</file>
+
+<file path="app/uae-tutoring/page.tsx">
+import React from 'react';
+import Link from 'next/link';
+import { Metadata } from 'next';
+import { 
+  FaCheckCircle, 
+  FaClock, 
+  FaWhatsapp, 
+  FaQuran, 
+  FaMicroscope, 
+  FaCalculator 
+} from 'react-icons/fa';
+
+export const metadata: Metadata = {
+  title: "1-on-1 British & IB Online Tutors in UAE | Dubai, Abu Dhabi, Sharjah",
+  description: "Specialized online tutoring for UAE families. Covering GCSE, IGCSE, IB DP/MYP, and Tajweed with native-level English instructors matching GST timezones.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/uae-tutoring",
+  },
+};
+
+export default function UAELandingPage() {
+  const whatsappUrl = "https://wa.me/923149500765?text=" + encodeURIComponent("Hello! I am based in the UAE and would like to inquire about 1-on-1 tutoring for my child.");
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      {/* Hero Section */}
+      <section className="bg-[#001a41] text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full">
+            <span>🇦🇪 UAE Standard Time (GST) • Dubai, Abu Dhabi & Sharjah</span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Premium 1-on-1 Virtual Tutoring Aligned with British & IB Curricula
+          </h1>
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            Personalized academic support in Mathematics, Sciences, English, and structured Tajweed for students attending international schools across the UAE.
+          </p>
+          <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            >
+              <FaWhatsapp className="text-xl" />
+              <span>Book Free Trial via WhatsApp</span>
+            </a>
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 px-8 rounded-xl transition-all"
+            >
+              Contact Academic Team
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Convenience Bar */}
+      <section className="bg-white border-b border-slate-200 py-6 px-4">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-around items-center gap-4 text-center text-sm text-slate-600 font-medium">
+          <div className="flex items-center gap-2">
+            <FaClock className="text-amber-500" />
+            <span>After-School & Weekend Slots</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaCheckCircle className="text-emerald-500" />
+            <span>Edexcel, AQA & Cambridge (CIE)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaCheckCircle className="text-emerald-500" />
+            <span>IB MYP & Diploma Support</span>
+          </div>
+        </div>
+      </section>
+
+      {/* UAE Key Offerings */}
+      <section className="py-16 px-4 max-w-5xl mx-auto space-y-12">
+        <div className="text-center space-y-3">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#001a41]">
+            Curriculum Expertise for UAE International Schools
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+            We focus on individual student needs, bridging classroom gaps and preparing learners for competitive board examinations.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+              <FaCalculator />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">IGCSE & GCSE Revision</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              In-depth coverage of exam past papers, mark schemes, and core concepts in Higher Math, Physics, and Chemistry.
+            </p>
+            <ul className="space-y-2 text-xs text-slate-700">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Past Paper Strategy</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Formula Application</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Grade 9 Focus Techniques</li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+              <FaMicroscope />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">IB Middle Years & Diploma</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Structured guidance for IB Mathematics (AA & AI) and Sciences, helping students manage heavy internal assessment workloads.
+            </p>
+            <ul className="space-y-2 text-xs text-slate-700">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Standard & Higher Level</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Concept Frameworks</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Critical Writing Skills</li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl">
+              <FaQuran />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">Tajweed & Islamic Values</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Patient, 1-on-1 Quranic recitation classes led by certified teachers, focusing on correct Makharij rules and memorization.
+            </p>
+            <ul className="space-y-2 text-xs text-slate-700">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Correct Pronunciation</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Male & Female Instructors</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Tailored Progress Pace</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Footer */}
+      <section className="bg-[#001a41] text-white py-12 px-4 text-center">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <h2 className="text-2xl font-bold">Schedule Your Free Trial Class in UAE Time</h2>
+          <p className="text-slate-300 text-sm">
+            Speak directly with our academic team to find a class time that fits your familys routine.
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3 px-6 rounded-xl transition-all text-sm mt-2"
+          >
+            <FaWhatsapp className="text-lg" />
+            <span>WhatsApp Us Now (+92 314 9500765)</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  );
+}
+</file>
+
+<file path="app/usa-tutoring/page.tsx">
+import React from 'react';
+import Link from 'next/link';
+import { Metadata } from 'next';
+import { 
+  FaCheckCircle, 
+  FaClock, 
+  FaWhatsapp, 
+  FaGraduationCap, 
+  FaLaptopCode, 
+  FaBookReader 
+} from 'react-icons/fa';
+
+export const metadata: Metadata = {
+  title: "Online Math & Science Tutoring USA | Common Core, AP & SAT Prep",
+  description: "Targeted 1-on-1 online tutoring for US students from elementary to high school. Aligned with Common Core, AP classes, and SAT math prep across EST, CST, MST, and PST.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/usa-tutoring",
+  },
+};
+
+export default function USALandingPage() {
+  const whatsappUrl = "https://wa.me/923149500765?text=" + encodeURIComponent("Hi! I am based in the US and would like to schedule a free 1-on-1 trial class for my child.");
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      {/* Hero Section */}
+      <section className="bg-[#001a41] text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full">
+            <span>🇺🇸 US Curriculum Aligned • Grades K–12</span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            1-on-1 Online Math, Science & AP Tutoring Built Around Your Child’s Schedule
+          </h1>
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            Helping elementary, middle, and high school students across the United States master Common Core math, tackle AP science courses, and boost SAT scores from home.
+          </p>
+          <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            >
+              <FaWhatsapp className="text-xl" />
+              <span>Book a Free Trial via WhatsApp</span>
+            </a>
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 px-8 rounded-xl transition-all"
+            >
+              Reserve Slot Online
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Timezone & Flexibility Bar */}
+      <section className="bg-white border-b border-slate-200 py-6 px-4">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-around items-center gap-4 text-center text-sm text-slate-600 font-medium">
+          <div className="flex items-center gap-2">
+            <FaClock className="text-amber-500" />
+            <span>Eastern Time (EST)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaClock className="text-amber-500" />
+            <span>Central Time (CST)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaClock className="text-amber-500" />
+            <span>Mountain Time (MST)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaClock className="text-amber-500" />
+            <span>Pacific Time (PST)</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Academic Pathways */}
+      <section className="py-16 px-4 max-w-5xl mx-auto space-y-12">
+        <div className="text-center space-y-3">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#001a41]">
+            Targeted Academic Programs for US Students
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+            We adapt directly to your state’s textbook standards, school homework, and standardized testing requirements.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl">
+              <FaGraduationCap />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">Elementary & Middle School</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Strengthen foundational math, word problems, reading comprehension, and introductory science concepts before high school.
+            </p>
+            <ul className="space-y-2 text-xs text-slate-700">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Common Core Math</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Reading & Grammar</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Intro to Logic & Scratch</li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+              <FaBookReader />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">High School & AP Prep</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Rigorous 1-on-1 coaching for Algebra I & II, Geometry, Pre-Calculus, Biology, Chemistry, and Physics.
+            </p>
+            <ul className="space-y-2 text-xs text-slate-700">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> AP Course Support</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Lab Report Guidance</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Exam Practice Tests</li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+              <FaLaptopCode />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">SAT Math & Coding Track</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">
+              Targeted strategies to eliminate algebraic errors on the Digital SAT, paired with real-world Python programming.
+            </p>
+            <ul className="space-y-2 text-xs text-slate-700">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Digital SAT Math Tactics</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Python & Data Logic</li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-emerald-500" /> Timed Quiz Practice</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Banner */}
+      <section className="bg-slate-900 text-white py-12 px-4 text-center">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <h2 className="text-2xl font-bold">See How Our 1-on-1 Classes Work</h2>
+          <p className="text-slate-300 text-sm">
+            Book a trial class to evaluate our tutors, test our digital whiteboard classroom, and discuss your childs goals.
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3 px-6 rounded-xl transition-all text-sm mt-2"
+          >
+            <FaWhatsapp className="text-lg" />
+            <span>Connect on WhatsApp (+92 314 9500765)</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  );
 }
 </file>
 
@@ -715,14 +1825,37 @@ export default function Footer() {
         {/* 1. ADVANCED SOCIAL ICONS */}
         <div className="flex gap-5 mb-10">
           {[
-            { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61593394480120", color: "hover:bg-blue-600" },
-            { icon: <FaLinkedinIn />, link: "https://pk.linkedin.com/in/asia-aman-32bb6464", color: "hover:bg-blue-700" },
-            { icon: <FaYoutube />, link: "https://www.youtube.com/@AbrahamOnlineAcademy", color: "hover:bg-red-600" },
-            { icon: <FaInstagram />, link: "https://www.instagram.com/musa.aman.9883739", color: "hover:bg-pink-600" },
+            { 
+              icon: <FaFacebookF />, 
+              link: "https://www.facebook.com/profile.php?id=61593394480120", 
+              color: "hover:bg-blue-600",
+              ariaLabel: "Visit our Facebook page"
+            },
+            { 
+              icon: <FaLinkedinIn />, 
+              link: "https://pk.linkedin.com/in/asia-aman-32bb6464", 
+              color: "hover:bg-blue-700",
+              ariaLabel: "Connect with us on LinkedIn" 
+            },
+            { 
+              icon: <FaYoutube />, 
+              link: "https://www.youtube.com/@AbrahamOnlineAcademy", 
+              color: "hover:bg-red-600",
+              ariaLabel: "Watch free classes on YouTube" 
+            },
+            { 
+              icon: <FaInstagram />, 
+              link: "https://www.instagram.com/musa.aman.9883739", 
+              color: "hover:bg-pink-600",
+              ariaLabel: "Follow us on Instagram" 
+            },
           ].map((social, index) => (
             <Link 
               key={index} 
               href={social.link}
+              aria-label={social.ariaLabel}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl transition-all duration-300 hover:-translate-y-2 shadow-lg ${social.color} hover:text-white`}
             >
               {social.icon}
@@ -739,13 +1872,16 @@ export default function Footer() {
             <li>
               <Link href="/courses" className="hover:text-yellow-500 transition-colors duration-300">Courses</Link>
             </li>
+            {/* Added Blog Link to Footer Navigation Grid */}
+            <li>
+              <Link href="/blog" className="hover:text-yellow-500 transition-colors duration-300">Blog & Guides</Link>
+            </li>
             <li>
               <Link href="/about" className="hover:text-yellow-500 transition-colors duration-300">About Us</Link>
             </li>
             <li>
               <Link href="/contact" className="hover:text-yellow-500 transition-colors duration-300">Contact Us</Link>
             </li>
-            
           </ul>
         </nav>
 
@@ -754,8 +1890,6 @@ export default function Footer() {
           Empowering students globally with the best online education system. Quality education for a better future.
         </div>
       </div>
-
-      
     </footer>
   );
 }
@@ -798,7 +1932,12 @@ export default function InstructorsInfo() {
         {/* Image Side */}
         <div className="w-full md:w-1/2">
           <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border-8 border-gray-50">
-            <Image src="/expert-teacher.png" alt="Study Desk" fill className="object-cover" />
+            <Image 
+              src="/expert-teacher.png" 
+              alt="Certified Online Instructor teaching Mathematics to international students" 
+              fill 
+              className="object-cover" 
+            />
           </div>
         </div>
 
@@ -838,14 +1977,102 @@ export default function Navbar() {
     <nav className="bg-[#001a41] text-white p-4 sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-2xl font-bold text-yellow-500">Abraham Online Academy</h1>
-        <div className="space-x-6">
-          <Link href="/" className="hover:text-yellow-400">Home</Link>
-          <Link href="/about" className="hover:text-yellow-400">About</Link>
-          <Link href="/courses" className="hover:text-yellow-400">Courses</Link>
-          <Link href="/contact" className="hover:text-yellow-400">Contact</Link>
+        <div className="space-x-6 flex items-center">
+          <Link 
+            href="/" 
+            className="hover:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#001a41] rounded-sm px-1 transition-colors"
+          >
+            Home
+          </Link>
+          <Link 
+            href="/about" 
+            className="hover:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#001a41] rounded-sm px-1 transition-colors"
+          >
+            About
+          </Link>
+          <Link 
+            href="/courses" 
+            className="hover:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#001a41] rounded-sm px-1 transition-colors"
+          >
+            Courses
+          </Link>
+          {/* New Blog Link matching your exact design token classes */}
+          <Link 
+            href="/blog" 
+            className="hover:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#001a41] rounded-sm px-1 transition-colors"
+          >
+            Blog & Guides
+          </Link>
+          <Link 
+            href="/contact" 
+            className="hover:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#001a41] rounded-sm px-1 transition-colors"
+          >
+            Contact
+          </Link>
         </div>
       </div>
     </nav>
+  );
+}
+</file>
+
+<file path="components/SchemaMarkup.tsx">
+export default function SchemaMarkup() {
+  const siteUrl = "https://abrahamonlineacademy.vercel.app";
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: "Abraham Online Academy",
+    url: siteUrl,
+    logo: `${siteUrl}/banner.png`,
+    description:
+      "Global distance learning platform providing high-quality virtual instruction for Grades 1 to 12.",
+    telephone: "+923135061127",
+    email: "tayyabamusa747@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Office 8, 3rd Floor, Sarwar Plaza, Shamsabad, Murree Road",
+      addressLocality: "Rawalpindi",
+      addressRegion: "Punjab",
+      postalCode: "44000",
+      addressCountry: "PK",
+    },
+    sameAs: [
+      "https://www.facebook.com/profile.php?id=61593394480120",
+      "https://pk.linkedin.com/in/asia-aman-32bb6464",
+      "https://www.youtube.com/@AbrahamOnlineAcademy",
+      "https://www.instagram.com/musa.aman.9883739",
+    ],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Abraham Online Academy",
+    url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/courses?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema),
+        }}
+      />
+    </>
   );
 }
 </file>
@@ -895,6 +2122,1044 @@ const eslintConfig = defineConfig([
 ]);
 
 export default eslintConfig;
+</file>
+
+<file path="lib/blog-data.ts">
+export interface BlogPost {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  date: string;
+  category: string;
+  content: string;
+}
+
+export const blogPosts: BlogPost[] = [
+  {
+    slug: "online-tutoring-kids-math-and-coding",
+    title: "Why Combining Math and Coding Gives Kids a Massive Advantage",
+    metaDescription: "Learn why pairing math logic with coding early builds strong analytical thinking and exam performance for kids in elementary and middle school.",
+    date: "2026-09-15",
+    category: "STEM & Coding",
+    content: `When parents think about academic support for their children, math usually tops the list. Later on, as tech skills become more important, programming gets added to the mix. 
+
+However, treating math and coding as two separate subjects misses a big opportunity. When taught together, math logic and programming concepts reinforce each other, making both subjects easier to master.
+
+Here is a breakdown of why combining these two disciplines creates a stronger foundation for elementary and middle school students.
+
+## The Hidden Connection Between Algebra and Python
+
+At its core, computer programming is applied algebra. Every time a child writes a simple script in Scratch or Python, they are working directly with algebraic principles:
+
+- **Variables:** Storing a player score in a game (score = 10) uses the exact same concept as solving for 'x' in an equation.
+- **Conditional Statements:** Using if/else blocks in code mirrors logical inequalities in math.
+- **Functions:** Writing a reusable block of code is identical to evaluating a mathematical function f(x) = y.
+
+When kids encounter variables in a traditional math textbook, the concept can feel abstract and dry. But when they use variables to control a character on a screen, the concept clicks instantly.
+
+## Breaking Down Problems Step-by-Step
+
+One of the biggest hurdles students face in school math is word problems. Most children struggle not because they can't do the calculation, but because they don't know how to break the problem into smaller parts.
+
+Coding fixes this habit through a process called decomposition. 
+
+In programming, you cannot write a script without breaking down the end goal into precise, sequential steps. When a student practices this logic regularly in code, they naturally start applying the same step-by-step thinking to complex math problems.
+
+## Building Confidence Through Trial and Error
+
+In a traditional classroom setting, making a mistake on a math test results in a red checkmark and lost points. This creates anxiety around getting answers wrong.
+
+Coding changes how kids perceive failure. When a program doesn't run, it isn't a failure—it is simply a bug that needs fixing. 
+
+Students learn to read error messages, test new approaches, and adjust their logic until the code works. This resilience carries straight back into their math studies. Instead of giving up on a tough geometry or algebra problem, they approach it as a puzzle to solve.
+
+## Practical Ways to Start Combining Math and Coding at Home
+
+If you want to help your child build these skills early without overwhelming them, consider these steps:
+
+1. **Start with Visual Block Coding:** Use platforms like Scratch to build games that rely on coordinate grids (X and Y axes) and angles.
+2. **Move to Text-Based Python:** As children reach middle school, introduce Python. It uses clean syntax that reads like standard English and mirrors high school math concepts.
+3. **Connect Homework to Code:** Ask your child to write a short program that calculates the area of a shape or solves a percentage problem. Building the tool forces them to master the underlying formula.
+
+At Abraham Online Academy, our 1-on-1 tutoring tracks integrate core math logic directly with practical coding lessons, giving students the tools to excel in school today and prepare for future STEM fields.`
+  },
+
+
+
+
+
+
+  {
+    slug: "igcse-physics-and-chemistry-preparation",
+    title: "How to Prepare for IGCSE Physics and Chemistry Without Panic",
+    metaDescription: "Practical, stress-free strategies to master IGCSE physics formulas, chemistry reaction mechanisms, and exam mark schemes.",
+    date: "2026-09-16",
+    category: "IGCSE & GCSE",
+    content: `Preparing for IGCSE Physics and Chemistry exams can feel overwhelming. Between memorizing dozens of formulas, understanding chemical equations, and navigating strict mark schemes, many students struggle to stay organized.
+
+The good news is that scoring top grades in Cambridge (CIE) or Edexcel science exams does not require endless late-night cramming. It requires a systematic approach to how concepts are tested.
+
+Here are four practical strategies to help your child prepare for IGCSE sciences with confidence.
+
+## Stop Memorizing Formulas—Understand the Relationships First
+
+A common mistake students make in IGCSE Physics is trying to memorize equations as isolated strings of letters. For example, memorizing $V = I \times R$ (Ohm’s Law) without understanding what voltage, current, and resistance actually do leads to errors when questions get rearranged.
+
+Instead of rote memorization:
+
+- **Connect Units to Variables:** Always write down the units alongside the formula (e.g., Volts = Amperes $\times$ Ohms). If you forget how to calculate speed, looking at the unit ($\text{m/s}$) tells you to divide distance (meters) by time (seconds).
+- **Practice Rearranging Equations:** Before plugging in numbers, rearrange the formula to isolate the target variable. This reduces simple calculation mistakes on paper.
+
+## Chemistry: Visualizing Reaction Rates and Bond Energies
+
+IGCSE Chemistry shifts quickly from basic facts to abstract ideas like stoichiometry, electrolysis, and organic chemistry. 
+
+To master these topics:
+
+1. **Draw the Processes:** Don't just read about electrolysis in a textbook. Draw the beaker, label the anode and cathode, and draw arrows showing where positive and negative ions move.
+2. **Master the Mole Concept:** Stoichiometry causes panic for many students. Break it down into three repeating steps: convert given values to moles, use the balanced equation ratio, and convert moles to the final required unit.
+
+## How to Master the Examiner's Mark Scheme
+
+Knowing the science content is only half the battle. To earn full marks, students must answer using the specific keywords exam boards look for.
+
+- **Look for Command Words:** Understand the difference between *"State"*, *"Describe"*, and *"Explain"*. "State" requires a brief fact. "Explain" requires a cause-and-effect statement using words like "because" or "therefore".
+- **Study Mark Schemes Directly:** After completing a past paper, grade it using the official mark scheme. Pay close attention to underlined words—these are mandatory terms required to earn the mark.
+
+## Managing Exam Stress During Revision Season
+
+High exam stress usually comes from a lack of structure. Help your child build a revision schedule that focuses on active recall rather than passive reading.
+
+Replacing passive textbook highlight sessions with timed past paper practice and targeted 1-on-1 tutoring sessions ensures students identify their weak spots weeks before exam day.` // Paste full markdown text here
+  },
+
+
+
+
+
+
+
+  {
+    slug: "learn-tajweed-online-at-home",
+    title: "Learning Tajweed Online: A Simple Guide for Families Living Abroad",
+    metaDescription: "Discover how 1-on-1 online Tajweed classes help children in Western and global environments master Quranic pronunciation with confidence and patience.",
+    date: "2026-09-17",
+    category: "Tajweed & Quran",
+    content: `For Muslim families living in the UK, US, Canada, Australia, or the UAE, finding qualified Quran teachers who speak fluent English can be a challenge.
+
+Parents want their children to recite the Quran accurately, with proper pronunciation and respect for Tajweed rules. However, busy school schedules and long evening commutes to local centers often make regular attendance difficult.
+
+Online Tajweed instruction has emerged as a practical solution, offering structured 1-on-1 guidance directly from home.
+
+## Why Correct Pronunciation (Makharij) Matters
+
+Tajweed is not simply about reciting melodiously; it is the science of pronouncing every Arabic letter from its correct point of articulation (*Makhraj*). 
+
+In Arabic, changing the sound of a letter slightly can alter the meaning of a word completely. For instance:
+
+- Confusing the letter **Qaf (ق)** with **Kaf (ك)** changes the meaning of the word.
+- Failing to hold a **Ghunnah** or apply proper **Madd** rules changes the flow and structure of the verse.
+
+For children growing up in non-Arabic speaking environments, hearing and producing these distinct throat and tongue sounds requires dedicated, one-on-one attention.
+
+## The Challenge for Kids Growing Up in Global Environments
+
+Children attending English-medium schools process language differently than native Arabic speakers. When taught in large group settings, quiet or shy students often slip through the cracks, picking up minor pronunciation errors that become harder to correct as they get older.
+
+Additionally, rigid traditional settings don't always offer the patience or encouragement younger learners need to stay motivated.
+
+## How 1-on-1 Online Tutoring Makes a Difference
+
+Online learning solves these challenges by creating a focused, interactive space for your child:
+
+### 1. Patient, Step-by-Step Feedback
+In a 1-on-1 virtual class, the instructor listens carefully to every single verse your child recites. Errors in Makharij or rule application are corrected immediately in a gentle, supportive manner.
+
+### 2. Flexible Schedules That Fit Around School
+Instead of rushing through traffic after school, lessons can be scheduled at times when your child is well-rested and ready to focus—whether that's early morning or on weekends.
+
+### 3. Clear Communication in English
+Our certified tutors explain the rules of Tajweed (such as *Ikhfa*, *Idgham*, and *Qalqalah*) using clear English terminology that kids can easily grasp and remember.
+
+## Building a Lasting Connection to the Quran
+
+The ultimate goal of learning Tajweed is to help your child feel connected to their faith with clarity and confidence. When a child learns to recite correctly without struggling over words, reading the Quran becomes a source of calm rather than a chore.
+
+At Abraham Online Academy, our male and female Tajweed tutors work patiently with students of all ages, helping them master recitation step-by-step from the comfort of home.` // Paste full markdown text here
+  }
+];
+</file>
+
+<file path="lib/courses-data.ts">
+export interface CourseDetail {
+  slug: string;
+  title: string;
+  subtitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  curriculums: { name: string; detail: string }[];
+  pillarsTitle: string;
+  pillarsDescription: string;
+  pillars: { name: string; detail: string }[];
+  agePhases: {
+    phase: string;
+    description: string;
+    iconColor: string; // Tailwind color classes
+  }[];
+  faqs: { question: string; answer: string }[];
+}
+
+export const coursesData: Record<string, CourseDetail> = {
+  /* =========================================================
+     1. MATHEMATICS (/courses/mathematics)
+     ========================================================= */
+  mathematics: {
+    slug: "mathematics",
+    title: "Master Mathematics with 1-on-1 Expert Online Tutors",
+    subtitle:
+      "Whether your child is building foundational number sense or preparing for high-stakes university entrance exams, mathematics does not have to be a struggle. Our certified global tutors transform math anxiety into mathematical confidence through personalized live sessions aligned with your regional curriculum.",
+    metaTitle: "Master Mathematics Online | 1-on-1 Tutors (Grades 1–12)",
+    metaDescription:
+      "Transform math anxiety into confidence! Certified 1-on-1 online math tutoring for GCSE, IGCSE, Common Core, AP Calculus, SAT, IB, and ACARA standards across all time zones.",
+    curriculums: [
+      {
+        name: "UK Board",
+        detail:
+          "KS1–KS3, GCSE, IGCSE, AS & A-Levels across Edexcel, Cambridge (CIE), and AQA.",
+      },
+      {
+        name: "US Curriculum",
+        detail:
+          "Common Core State Standards, AP Calculus (AB/BC), AP Statistics, and Digital SAT/ACT Prep.",
+      },
+      {
+        name: "International Baccalaureate (IB)",
+        detail:
+          "Full coverage for PYP, MYP, and DP Mathematics (Analysis & Approaches / Applications & Interpretation).",
+      },
+      {
+        name: "Australia & Canada",
+        detail:
+          "State and provincial standards including ACARA, NAPLAN, ATAR preparation, and Ontario OS&E standards.",
+      },
+      {
+        name: "Middle East International Schools",
+        detail:
+          "Tailored dual-curriculum support for private international school students across Dubai, Abu Dhabi, Riyadh, and Jeddah.",
+      },
+    ],
+    pillarsTitle: "The Core Mathematical Pillars We Cover",
+    pillarsDescription:
+      'We focus on universal principles so students understand the "why" behind formulas instead of relying on temporary memorization.',
+    pillars: [
+      {
+        name: "Foundational Arithmetic",
+        detail:
+          "Fractions, decimals, percentages, ratios, and mental math shortcuts.",
+      },
+      {
+        name: "Algebra & Functions",
+        detail:
+          "Linear equations, polynomials, quadratic formulas, and advanced matrices.",
+      },
+      {
+        name: "Geometry & Trigonometry",
+        detail:
+          "Spatial reasoning, 2D/3D shapes, geometric proofs, and trigonometric identities.",
+      },
+      {
+        name: "Calculus",
+        detail: "Limits, derivatives, integrals, and differential equations.",
+      },
+      {
+        name: "Data & Statistics",
+        detail:
+          "Probability models, measures of central tendency, frequency distributions, and data analysis.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Primary & Elementary (Grades 1–5): Building the Foundation",
+        description:
+          "We introduce math through engaging, highly visual lessons. We focus on basic operations, spatial awareness, and word problems so young learners build a positive, confident relationship with numbers early on.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+      {
+        phase:
+          "Middle & Lower Secondary (Grades 6–8): Connecting the Dots",
+        description:
+          "This critical phase introduces abstract thinking. We guide students smoothly into Pre-Algebra and basic Geometry, closing learning gaps and building strong problem-solving skills before high school pressure starts.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase:
+          "High School & Exam Prep (Grades 9–12): Achieving Top Grades",
+        description:
+          "Rigorous, exam-focused preparation. We dissect past papers, teach time-management strategies, and help students navigate specific board marking rubrics (Cambridge IGCSE, AP, SAT, IB) to secure top grades for university entry.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+    ],
+    faqs: [
+      {
+        question:
+          "What digital tools do students need for online math classes?",
+        answer:
+          "All your child needs is a computer or tablet with a stable internet connection. Our digital whiteboard platform runs directly inside the web browser with no heavy downloads needed.",
+      },
+      {
+        question:
+          "Can we request a tutor specialized in a specific curriculum (like AP Calculus or Cambridge IGCSE)?",
+        answer:
+          "Yes, absolutely! We match your child with a tutor who has documented experience and formal training in your exact school board and textbook standards.",
+      },
+      {
+        question:
+          "What if my child needs help with school homework or upcoming tests?",
+        answer:
+          "Our 1-on-1 tutors adapt directly to your child's weekly school assignments. Students can bring their textbook exercises or test review sheets to class for direct step-by-step guidance.",
+      },
+    ],
+  },
+
+  /* =========================================================
+     2. PHYSICS (/courses/physics)
+     ========================================================= */
+  physics: {
+    slug: "physics",
+    title: "Master Physics with 1-on-1 Expert Online Tutors",
+    subtitle:
+      "From mechanics and electricity to waves and atomic structure, physics does not have to be overwhelming. At Abraham Online Academy, our expert tutors turn complex physical laws and abstract formulas into clear, intuitive step-by-step logic.",
+    metaTitle: "1-on-1 Online Physics Tutoring | GCSE, IGCSE, AP & IB Physics",
+    metaDescription:
+      "Ace your physics exams! Personalized 1-on-1 online physics tutoring for Cambridge IGCSE, Edexcel, AP Physics, IB DP, and Australian standards.",
+    curriculums: [
+      {
+        name: "UK Board Physics",
+        detail:
+          "KS3 Science, GCSE, and IGCSE Physics (Edexcel, Cambridge CIE, AQA), plus A-Level Physics.",
+      },
+      {
+        name: "US Curriculum Physics",
+        detail:
+          "High School Physics, AP Physics 1, AP Physics 2, and AP Physics C (Mechanics & Electricity).",
+      },
+      {
+        name: "International Baccalaureate (IB)",
+        detail:
+          "Complete coverage for IB MYP Sciences and IB DP Physics at Standard Level (SL) and Higher Level (HL).",
+      },
+      {
+        name: "Australia & Canada",
+        detail:
+          "State standards including Senior Secondary Physics (ACARA), NAPLAN science literacy, and Canadian provincial standards.",
+      },
+      {
+        name: "Middle East International Schools",
+        detail:
+          "Specialized exam revision for private international school students in the UAE and Saudi Arabia.",
+      },
+    ],
+    pillarsTitle: "The Core Physics Pillars We Cover",
+    pillarsDescription:
+      "We teach students how to analyze physical systems, rearrange multi-step equations, and satisfy exact marking rubrics in board exams.",
+    pillars: [
+      {
+        name: "Kinematics & Dynamics",
+        detail:
+          "Forces, Newton's laws, motion equations, momentum, work, energy, and power calculations.",
+      },
+      {
+        name: "Electricity & Magnetism",
+        detail:
+          "Circuit analysis (series/parallel), Ohm's law, electromagnetic induction, and motor effects.",
+      },
+      {
+        name: "Waves & Optics",
+        detail:
+          "Wave behavior, reflection, refraction, diffraction, Snell's law, and the electromagnetic spectrum.",
+      },
+      {
+        name: "Thermal Physics & Thermodynamics",
+        detail:
+          "Heat capacity, latent heat, gas laws, molecular kinetic theory, and energy transfer mechanisms.",
+      },
+      {
+        name: "Atomic, Nuclear & Space Physics",
+        detail:
+          "Radioactivity, nuclear decay equations, half-life problems, quantum phenomena, and astrophysics.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Middle Secondary (Grades 6–8): Intro to Physical Laws",
+        description:
+          "Building curiosity and foundational logic through real-world examples—explaining forces, simple circuits, light, and sound using interactive visual aids.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "Upper Secondary (Grades 9–10): IGCSE & GCSE Focus",
+        description:
+          "Developing formula manipulation and unit conversion skills. We train students to dissect multi-mark exam questions and apply theory accurately.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+      {
+        phase: "High School & Pre-University (Grades 11–12): AP & IB Success",
+        description:
+          "Advanced problem-solving for AP Physics, IB HL, and A-Levels. Intensive past paper practice, vector calculus support, and lab report guidance.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "How do online tutors demonstrate physics concepts and experiments?",
+        answer:
+          "We utilize interactive digital simulations (PhET simulations, vector modeling tools, and digital whiteboards) where students can manipulate variables and visualize physical phenomena in real time.",
+      },
+      {
+        question: "Does the tutor help with physics formula memorization?",
+        answer:
+          "Instead of rote memorization, we teach students how units derive equations and how to utilize provided exam data formula sheets effectively during test conditions.",
+      },
+      {
+        question: "Can my child get help with IB or A-Level practical lab reports?",
+        answer:
+          "Yes! Tutors provide guidance on error analysis, uncertainty calculations, graphing techniques, and structuring practical write-ups.",
+      },
+    ],
+  },
+
+  /* =========================================================
+     3. CHEMISTRY (/courses/chemistry)
+     ========================================================= */
+  chemistry: {
+    slug: "chemistry",
+    title: "Master Chemistry with 1-on-1 Expert Online Tutors",
+    subtitle:
+      "Demystify chemical equations, reaction mechanisms, and stoichiometry calculations. Our interactive 1-on-1 sessions guide students through chemical theory, atomic models, and lab analysis with total clarity.",
+    metaTitle: "1-on-1 Online Chemistry Tutoring | GCSE, IGCSE, AP & IB Chemistry",
+    metaDescription:
+      "Master chemistry formulas and reaction mechanisms with certified 1-on-1 online tutors. Tailored for GCSE, IGCSE, AP Chemistry, IB DP, and global standards.",
+    curriculums: [
+      {
+        name: "UK Board Chemistry",
+        detail:
+          "KS3 Science, GCSE, and IGCSE Chemistry (Cambridge CIE, Edexcel, AQA), plus AS & A-Level Chemistry.",
+      },
+      {
+        name: "US Curriculum Chemistry",
+        detail:
+          "High School Chemistry, Honors Chemistry, and AP Chemistry exam preparation.",
+      },
+      {
+        name: "International Baccalaureate (IB)",
+        detail:
+          "Full coaching for IB MYP Science and IB DP Chemistry (Standard & Higher Level).",
+      },
+      {
+        name: "Australia & Canada",
+        detail:
+          "Senior secondary chemistry frameworks across ACARA (Australia) and Canadian provincial diploma requirements.",
+      },
+      {
+        name: "Middle East International Schools",
+        detail:
+          "Curriculum-matched support for expat students attending top international schools in Dubai, Abu Dhabi, and Saudi Arabia.",
+      },
+    ],
+    pillarsTitle: "The Core Chemistry Pillars We Cover",
+    pillarsDescription:
+      "We break down abstract molecular concepts into clear visual models, giving students mastery over theory and calculations alike.",
+    pillars: [
+      {
+        name: "Stoichiometry & The Mole Concept",
+        detail:
+          "Mole-mass conversions, reacting mass calculations, gas volumes, concentration, and titration calculations.",
+      },
+      {
+        name: "Atomic Structure & Periodic Trends",
+        detail:
+          "Electron configurations, bonding (ionic, covalent, metallic), intermolecular forces, and periodic table trends.",
+      },
+      {
+        name: "Physical & Energetic Chemistry",
+        detail:
+          "Enthalpy changes, Hess's law, reaction kinetics, collision theory, and chemical equilibria (Le Chatelier's principle).",
+      },
+      {
+        name: "Organic Chemistry",
+        detail:
+          "Nomenclature, functional groups, reaction mechanisms (alkanes, alkenes, alcohols, polymers), and synthesis pathways.",
+      },
+      {
+        name: "Electrochemistry & Analysis",
+        detail:
+          "Redox reactions, electrolysis calculations, galvanic cells, and spectroscopic identification methods.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Middle Secondary (Grades 6–8): Matter & Simple Reactions",
+        description:
+          "Building confidence with states of matter, elements, compounds, mixtures, and the basic periodic table layout.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+      {
+        phase: "Upper Secondary (Grades 9–10): IGCSE & GCSE Mastery",
+        description:
+          "Focusing heavily on balancing chemical equations, mastering mole calculations, and understanding qualitative analysis tests.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "High School & Exam Prep (Grades 11–12): AP & IB Distinction",
+        description:
+          "Deep dive into organic synthesis, thermodynamics, equilibrium calculations ($K_c$, $K_p$, $K_a$), and past exam mark scheme breakdowns.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "Why do so many students struggle with chemistry stoichiometry?",
+        answer:
+          "Stoichiometry requires bridging abstract math with chemical ratios. Our tutors use a proven 3-step ratio framework that makes mole calculations logical and simple.",
+      },
+      {
+        question: "Can tutors help with organic chemistry reaction pathways?",
+        answer:
+          "Yes! We use dynamic digital whiteboards to draw functional groups, reaction arrows, and mechanisms step-by-step until the student masters them.",
+      },
+      {
+        question: "Are classes customized to my child's specific exam board?",
+        answer:
+          "Always. We align specifically with Edexcel, Cambridge CIE, AQA, AP, or IB syllabus points so your child studies only what is on their exam.",
+      },
+    ],
+  },
+
+  /* =========================================================
+     4. CODING & COMPUTER SCIENCE (/courses/coding)
+     ========================================================= */
+  coding: {
+    slug: "coding",
+    title: "Learn Coding & Computer Science 1-on-1 (Grades 1–12)",
+    subtitle:
+      "Empower your child with real-world programming skills. From visual logic in Scratch to Python, Web Development, and GCSE/AP Computer Science, we turn students from passive tech users into confident digital creators.",
+    metaTitle: "1-on-1 Online Coding & Computer Science Classes for Kids",
+    metaDescription:
+      "Interactive 1-on-1 coding lessons for kids and teens. Learn Scratch, Python, Web Development, and AP/GCSE Computer Science from expert instructors.",
+    curriculums: [
+      {
+        name: "Young Creators Track (Grades 1–5)",
+        detail:
+          "Block-based logic using Scratch and Blockly to build games, animations, and interactive stories.",
+      },
+      {
+        name: "Text-Based Python Track (Grades 6–8)",
+        detail:
+          "Transitioning to real text code with Python—variables, loops, functions, lists, and game development.",
+      },
+      {
+        name: "GCSE & IGCSE Computer Science",
+        detail:
+          "Cambridge CIE (0478) and Edexcel Computer Science curriculum—theory, algorithms, and pseudocode.",
+      },
+      {
+        name: "US AP Computer Science",
+        detail:
+          "AP Computer Science Principles (CSP) and AP Computer Science A (Java programming & OOP).",
+      },
+      {
+        name: "Web Development & STEM",
+        detail:
+          "Building real websites using HTML5, CSS3, and JavaScript, paired with algorithmic logic.",
+      },
+    ],
+    pillarsTitle: "The Core Programming Pillars We Teach",
+    pillarsDescription:
+      "We combine hands-on software projects with fundamental computational thinking so students learn principles that apply to any technology.",
+    pillars: [
+      {
+        name: "Computational Thinking & Logic",
+        detail:
+          "Decomposition, pattern recognition, abstraction, and step-by-step algorithm design.",
+      },
+      {
+        name: "Core Programming Structures",
+        detail:
+          "Variables, data types, conditional branching (if/else), loops (for/while), and functions.",
+      },
+      {
+        name: "Data Structures & File Handling",
+        detail:
+          "Arrays, lists, dictionaries, tuples, and reading/writing external text and CSV files.",
+      },
+      {
+        name: "Object-Oriented Programming (OOP)",
+        detail:
+          "Classes, objects, inheritance, encapsulation, and modular software architecture.",
+      },
+      {
+        name: "Hardware, Networks & Security",
+        detail:
+          "Binary logic, CPU architecture, network protocols, cybersecurity basics, and boolean algebra for exams.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Elementary (Grades 1–5): Visual Logic & Game Building",
+        description:
+          "Kids learn how computers think through drag-and-drop block coding. They build custom games, animations, and stories while learning sequence and loops.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+      {
+        phase: "Middle School (Grades 6–8): Real Python Programming",
+        description:
+          "Students graduate to typing real code in Python. They build text-based games, calculators, and logic projects while reinforcing school math skills.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "High School (Grades 9–12): Web Dev & Computer Science Exams",
+        description:
+          "Rigorous academic coding for AP CS, GCSE, or building portfolio-worthy websites and applications using Python, Java, or Web stacks.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "Does my child need prior coding experience to start?",
+        answer:
+          "Not at all! We start completely from scratch for beginners and adjust the pace according to your child's age and experience.",
+      },
+      {
+        question: "What software or computer specifications are required?",
+        answer:
+          "Any standard Windows PC, Mac, or Chromebook with a web browser works. We use browser-based coding environments so parents don't need to install complex software.",
+      },
+      {
+        question: "How does coding help with regular school subjects?",
+        answer:
+          "Coding directly strengthens math logic, algebraic thinking, problem decomposition, and attention to detail—helping students excel across STEM subjects.",
+      },
+    ],
+  },
+
+    /* =========================================================
+     5. ENGLISH LANGUAGE & LITERATURE (/courses/english)
+     ========================================================= */
+  english: {
+    slug: "english",
+    title: "Master English Language & Literature 1-on-1 (Grades 1–12)",
+    subtitle:
+      "From early reading fluency and creative writing to high school essay analysis, grammar mastery, and IGCSE/SAT English preparation. Our certified tutors help students communicate with clarity, precision, and confidence.",
+    metaTitle: "1-on-1 Online English Language & Literature Tutoring",
+    metaDescription:
+      "Boost reading comprehension, essay writing, grammar, and exam performance. Personalized 1-on-1 online English tutoring for GCSE, IGCSE, SAT, and IB.",
+    curriculums: [
+      {
+        name: "UK Board English",
+        detail:
+          "KS1–KS3 English, GCSE & IGCSE English Language & Literature (Cambridge CIE, Edexcel, AQA).",
+      },
+      {
+        name: "US Common Core ELA",
+        detail:
+          "Elementary to High School English Language Arts (ELA), AP English Language & Composition, and Digital SAT Reading & Writing.",
+      },
+      {
+        name: "International Baccalaureate (IB)",
+        detail:
+          "Full support for IB MYP Language & Literature and IB DP English A: Language and Literature (SL & HL).",
+      },
+      {
+        name: "Australia & Canada",
+        detail:
+          "ACARA English standards, NAPLAN literacy preparation, and Canadian provincial high school diploma English.",
+      },
+      {
+        name: "Global ESL & Test Prep",
+        detail:
+          "Targeted coaching for IELTS Academic/General, TOEFL, and conversational English fluency for non-native speakers.",
+      },
+    ],
+    pillarsTitle: "The Core English Pillars We Teach",
+    pillarsDescription:
+      "We combine structural grammar rules with expressive writing techniques and critical textual analysis.",
+    pillars: [
+      {
+        name: "Reading Comprehension & Critical Analysis",
+        detail:
+          "Extracting implicit meaning, analyzing tone, authorial intent, and figurative language across fiction and non-fiction.",
+      },
+      {
+        name: "Creative & Persuasive Essay Writing",
+        detail:
+          "Structuring narrative essays, argumentative pieces, analytical thesis statements, and using the P.E.E.L. paragraph model.",
+      },
+      {
+        name: "Grammar, Punctuation & Vocabulary",
+        detail:
+          "Mastering complex sentence structures, active/passive voice, punctuation rules, and expanding advanced academic vocabulary.",
+      },
+      {
+        name: "Literary Analysis & Poetry",
+        detail:
+          "Dissecting classic and modern novels, plays (Shakespeare), and poetry for board examinations.",
+      },
+      {
+        name: "Verbal Communication & Public Speaking",
+        detail:
+          "Building verbal confidence, speech structure, pronunciation, and presentation skills for school assessments.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Primary & Elementary (Grades 1–5): Phonics & Early Literacy",
+        description:
+          "Building phonics, sight words, reading fluency, spelling patterns, and simple paragraph structure through engaging visual storytelling.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+      {
+        phase: "Middle School (Grades 6–8): Expressive Writing & Grammar",
+        description:
+          "Developing structured essay mechanics, vocabulary expansion, reading comprehension strategies, and analytical thinking.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "High School & Exam Prep (Grades 9–12): Board & SAT Mastery",
+        description:
+          "Rigorous preparation for IGCSE, GCSE, AP English, and SAT Verbal sections. Dissecting marking criteria and writing top-tier timed essays.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "How do tutors help students who struggle with essay structuring?",
+        answer:
+          "We use proven frameworks like P.E.E.L. (Point, Evidence, Explanation, Link) and paragraph outlines so students can organize their thoughts clearly before writing.",
+      },
+      {
+        question: "Is this course suitable for non-native English speakers living abroad?",
+        answer:
+          "Yes! Our tutors tailor the pace to help ESL students build vocabulary, correct pronunciation errors, and reach grade-level fluency quickly.",
+      },
+      {
+        question: "Do you prepare students for the Digital SAT Reading & Writing section?",
+        answer:
+          "Absolutely. We cover inference questions, vocabulary in context, grammar conventions, and time-management strategies specific to the Digital SAT format.",
+      },
+    ],
+  },
+
+  /* =========================================================
+     6. URDU LANGUAGE (/courses/urdu)
+     ========================================================= */
+  urdu: {
+    slug: "urdu",
+    title: "Learn Urdu Online: Speaking, Reading & Writing for Overseas Families",
+    subtitle:
+      "Help your children stay connected to their heritage language. Our patient 1-on-1 tutors guide young learners living in the UK, USA, UAE, Canada, and Australia through conversational fluency, script reading, and school Urdu syllabus support.",
+    metaTitle: "1-on-1 Online Urdu Language Classes for Kids & Teens",
+    metaDescription:
+      "Help your child speak, read, and write Urdu with confidence. Personalized 1-on-1 online Urdu lessons for overseas families and school exam prep.",
+    curriculums: [
+      {
+        name: "Overseas Heritage Language Track",
+        detail:
+          "Designed for kids raised abroad—focusing on conversational speaking, vocabulary, and basic script recognition.",
+      },
+      {
+        name: "O-Level / IGCSE Urdu",
+        detail:
+          "Cambridge O-Level Urdu First Language (3247) and Second Language (3248) exam preparation.",
+      },
+      {
+        name: "Federal Board (FBISE) & Provincial Boards",
+        detail:
+          "Complete curriculum support for Pakistani school syllabus requirements from Grade 1 through Matric/FSc.",
+      },
+      {
+        name: "Adult Conversational Urdu",
+        detail:
+          "Tailored functional speaking and reading modules for adults wanting to connect with family and culture.",
+      },
+    ],
+    pillarsTitle: "The Core Urdu Language Pillars We Cover",
+    pillarsDescription:
+      "A structured step-by-step approach to master the Urdu script, vocabulary, grammar, and literature.",
+    pillars: [
+      {
+        name: "Script Recognition & Handwriting (Haroof-e-Tahajji)",
+        detail:
+          "Learning the Arabic-based Urdu script, letter joining rules, phonics, and proper handwriting techniques.",
+      },
+      {
+        name: "Conversational Fluency & Listening",
+        detail:
+          "Building natural speaking confidence for daily conversations with family, relatives, and community members.",
+      },
+      {
+        name: "Grammar & Sentence Construction (Qawaid)",
+        detail:
+          "Nouns, verbs, tenses, gender rules (Tazfeer-o-Tanees), singular/plural (Wahid/Muta'addad), and idiomatic phrases.",
+      },
+      {
+        name: "Creative & Formal Writing (Insha-Pardazi)",
+        detail:
+          "Essay writing (Mazmoon), letter writing (Khatut), application drafting, and story completion.",
+      },
+      {
+        name: "Literature & Poetry (Ghazal & Nazm)",
+        detail:
+          "Understanding classical and modern Urdu poetry, prose explanation (Tashreeh), and literary heritage.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Beginners (Grades 1–4): Phonics, Letters & Vocabulary",
+        description:
+          "Fun, interactive introduction to Urdu alphabets, basic object names, common greetings, and simple two-letter word reading.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+      {
+        phase: "Intermediate (Grades 5–8): Sentence Building & Reading",
+        description:
+          "Graduating to reading short stories, writing full sentences, expanding daily vocabulary, and mastering essential grammar.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "Advanced & O-Level (Grades 9–12): Exam Writing & Literature",
+        description:
+          "Focusing on Cambridge O-Level past papers, translation exercises (English to Urdu), summary writing, and poetry analysis.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "My child speaks no Urdu at all. Can they still join?",
+        answer:
+          "Yes! We start with absolute basics using English as a bridge language, introducing everyday vocabulary and simple conversational phrases gently.",
+      },
+      {
+        question: "Do you offer female Urdu tutors for young children?",
+        answer:
+          "Yes, we have experienced male and female instructors, allowing parents to choose the preferred tutor for their child.",
+      },
+      {
+        question: "Can the tutor follow our school textbook syllabus?",
+        answer:
+          "Definitely. If your child attends a school that requires Urdu, the tutor will work directly from their prescribed textbook and weekly homework.",
+      },
+    ],
+  },
+
+  /* =========================================================
+     7. ISLAMIAT & HIFZ-UL-QURAN (/courses/islamiat)
+     ========================================================= */
+  islamiat: {
+    slug: "islamiat",
+    title: "Online Islamiat, Tajweed & Quran Hifz Program",
+    subtitle:
+      "Nurture strong Islamic values and authentic Quranic recitation from home. Guided by certified male and female scholars, our 1-on-1 sessions cover Qaida, Tajweed rules, Quran memorization (Hifz), and O-Level/School Islamiat curriculum.",
+    metaTitle: "Online Islamiat, Tajweed & Quran Hifz Classes | 1-on-1 Female & Male Tutors",
+    metaDescription:
+      "Learn Quran with Tajweed, Hifz, and Islamiat online from home. Certified 1-on-1 female and male tutors for kids and teens across US, UK, UAE, and global time zones.",
+    curriculums: [
+      {
+        name: "Qaida & Nazra with Tajweed",
+        detail:
+          "Step-by-step recitation foundation starting from Noorani Qaida to full Quran Nazra with proper Makharij.",
+      },
+      {
+        name: "Hifz-ul-Quran (Memorization Track)",
+        detail:
+          "Systematic 1-on-1 memorization plans (Short Surahs, Juz Amma, or full Quran Hifz) with daily revision.",
+      },
+      {
+        name: "O-Level / IGCSE Islamiat",
+        detail:
+          "Cambridge O-Level Islamiat (2058 / 0493)—covering Quranic passages, Hadith, Seerah, Caliphate, and Articles of Faith.",
+      },
+      {
+        name: "Essential Islamic Studies & Duas",
+        detail:
+          "Teaching daily Masnoon Duas, Salah steps, Wudu, Islamic etiquette, Akhlaq, and stories of the Prophets.",
+      },
+    ],
+    pillarsTitle: "The Core Islamic & Quranic Pillars We Cover",
+    pillarsDescription:
+      "Combining correct pronunciation (Makharij) with spiritual understanding, moral character, and academic board prep.",
+    pillars: [
+      {
+        name: "Makharij & Correct Pronunciation",
+        detail:
+          "Articulating every Arabic letter accurately from its point of origin to preserve the sacred meaning of Quranic verses.",
+      },
+      {
+        name: "Tajweed Rules (Rules of Recitation)",
+        detail:
+          "Mastering Ghunnah, Ikhfa, Idgham, Qalqalah, Madd, and stopping rules (Waqf) through structured practice.",
+      },
+      {
+        name: "Structured Memorization (Sabaq, Sabqi, Manzil)",
+        detail:
+          "A proven 3-tier memorization method ensuring new lessons, recent lessons, and older Juz are revised daily.",
+      },
+      {
+        name: "Seerah & Islamic History",
+        detail:
+          "Studying the life of Prophet Muhammad (PBUH), the Rightly Guided Caliphs, and key historical milestones.",
+      },
+      {
+        name: "Practical Fiqh & Character (Akhlaq)",
+        detail:
+          "Instilling honesty, respect for parents, daily prayers (Salah), and moral values for children living in modern societies.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Young Learners (Grades 1–4): Qaida, Short Surahs & Duas",
+        description:
+          "Gentle, patient guidance focusing on Noorani Qaida letters, basic Tajweed, memorizing daily Duas, and learning Salah steps.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+      {
+        phase: "Growing Youth (Grades 5–8): Quran Fluency & Islamic Studies",
+        description:
+          "Fluent Quran recitation, expanding Surah memorization, learning Islamic rules, and building strong moral identity.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "High School & Board Prep (Grades 9–12): O-Level Islamiat",
+        description:
+          "Rigorous preparation for Cambridge O-Level Islamiat exams. Structuring 10-mark and 4-mark answers using Quranic references.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "Are female Quran and Tajweed teachers available for young girls and sisters?",
+        answer:
+          "Yes, we have certified female Qarias available for female students and young children.",
+      },
+      {
+        question: "How does the tutor ensure my child doesn't forget past memorized Surahs during Hifz?",
+        answer:
+          "We strictly follow the classical Sabaq (New Lesson), Sabqi (Recent Memory), and Manzil (Old Memory) revision system every single class.",
+      },
+      {
+        question: "Can we combine Tajweed recitation with basic Islamic Studies in the same class?",
+        answer:
+          "Yes! Tutors can divide the session so part of the class is dedicated to Quran recitation and part to learning daily Duas and Islamic values.",
+      },
+    ],
+  },
+
+  /* =========================================================
+     8. BIOLOGY (/courses/biology)
+     ========================================================= */
+  biology: {
+    slug: "biology",
+    title: "Master Biology & Life Sciences with 1-on-1 Online Tutors",
+    subtitle:
+      "Explore the science of life—from cellular mechanics and genetics to human physiology, enzymes, and ecosystems. Our expert tutors turn dense biology textbooks into clear visual diagrams and exam-winning answers.",
+    metaTitle: "1-on-1 Online Biology Tutoring | GCSE, IGCSE, AP & IB Biology",
+    metaDescription:
+      "Ace your biology exams! Certified 1-on-1 online biology tutoring for Cambridge IGCSE, Edexcel, AP Biology, IB DP, and high school pre-med preparation.",
+    curriculums: [
+      {
+        name: "UK Board Biology",
+        detail:
+          "KS3 Science, GCSE, and IGCSE Biology (Cambridge CIE, Edexcel, AQA), plus AS & A-Level Biology.",
+      },
+      {
+        name: "US Curriculum Biology",
+        detail:
+          "High School Biology, Honors Biology, and AP Biology exam preparation for pre-med aspiring students.",
+      },
+      {
+        name: "International Baccalaureate (IB)",
+        detail:
+          "Full coaching for IB MYP Sciences and IB DP Biology (Standard Level & Higher Level).",
+      },
+      {
+        name: "Australia & Canada",
+        detail:
+          "Senior secondary life sciences frameworks across ACARA (Australia) and Canadian provincial diploma standards.",
+      },
+      {
+        name: "Middle East International Schools",
+        detail:
+          "Targeted support for expat students attending private international schools in Dubai, Abu Dhabi, Riyadh, and Jeddah.",
+      },
+    ],
+    pillarsTitle: "The Core Biological Sciences Pillars We Cover",
+    pillarsDescription:
+      "We teach students how to master biological terminology, interpret experimental data, and satisfy strict exam mark schemes.",
+    pillars: [
+      {
+        name: "Cell Biology & Molecular Genetics",
+        detail:
+          "Cell structure, organelle functions, DNA replication, protein synthesis, mitosis, meiosis, and inheritance patterns.",
+      },
+      {
+        name: "Human Anatomy & Physiology",
+        detail:
+          "Circulatory, respiratory, nervous, digestive, immune, and endocrine systems, alongside homeostasis mechanisms.",
+      },
+      {
+        name: "Plant Physiology & Photosynthesis",
+        detail:
+          "Xylem/phloem transport, leaf structure, light-dependent/independent reactions, and transpiration factors.",
+      },
+      {
+        name: "Ecology, Evolution & Biodiversity",
+        detail:
+          "Ecosystem dynamics, energy flow, food webs, natural selection, speciation, and human impact on biodiversity.",
+      },
+      {
+        name: "Biotechnology & Enzyme Kinetics",
+        detail:
+          "Enzyme action models, factors affecting reaction rates, genetic engineering, PCR, and gel electrophoresis.",
+      },
+    ],
+    agePhases: [
+      {
+        phase: "Middle Secondary (Grades 6–8): Living Organisms & Systems",
+        description:
+          "Building scientific curiosity through visual diagrams of plant and animal cells, human body organ systems, and food chains.",
+        iconColor: "bg-emerald-100 text-emerald-600",
+      },
+      {
+        phase: "Upper Secondary (Grades 9–10): IGCSE & GCSE Biology",
+        description:
+          "Mastering key biological terminology, genetic cross diagrams (Punnett squares), enzyme graphs, and experimental data interpretation.",
+        iconColor: "bg-blue-100 text-blue-600",
+      },
+      {
+        phase: "High School & Pre-Med (Grades 11–12): AP & IB Biology Distinction",
+        description:
+          "Advanced biochemical pathways, gene expression analysis, statistical tests ($\chi^2$), and past paper essay mark schemes.",
+        iconColor: "bg-amber-100 text-amber-600",
+      },
+    ],
+    faqs: [
+      {
+        question: "How do tutors help students memorize complex biological vocabulary?",
+        answer:
+          "We use visual mind maps, root word breakdowns (Greek/Latin roots), and interactive diagrams so students understand the structure rather than just memorizing long words.",
+      },
+      {
+        question: "Can tutors help with IB Biology Internal Assessments (IA) or lab write-ups?",
+        answer:
+          "Yes! Tutors provide guidance on hypothesis formulation, variable control, data presentation, and evaluating experimental limitations.",
+      },
+      {
+        question: "How do you prepare students for 6-mark extended writing questions in GCSE/A-Level?",
+        answer:
+          "We break down official examiner mark schemes, teaching students how to include mandatory keywords and logical bullet points to secure maximum marks.",
+      },
+    ],
+  },
+};
 </file>
 
 <file path="next.config.ts">

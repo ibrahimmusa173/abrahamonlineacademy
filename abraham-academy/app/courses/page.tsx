@@ -1,15 +1,6 @@
 import { Metadata } from "next";
 import React from 'react';
-
-export const metadata: Metadata = {
-  title: "Courses & Curricula | GCSE, IGCSE, Common Core, ACARA & Tajweed",
-  description:
-    "Explore interactive courses in Mathematics, Physics, Chemistry, Computer Science, English, and Tajweed aligned with UK, USA, UAE, and Australian standards.",
-  alternates: {
-    canonical: "https://abrahamonlineacademy.vercel.app/courses",
-  },
-};
-
+import Link from 'next/link';
 import { 
   FaSquareRootAlt, 
   FaAtom, 
@@ -24,54 +15,80 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 
-const subjects = [
+export const metadata: Metadata = {
+  title: "Courses & Curricula | GCSE, IGCSE, Common Core, ACARA & Tajweed",
+  description:
+    "Explore interactive courses in Mathematics, Physics, Chemistry, Computer Science, English, and Tajweed aligned with UK, USA, UAE, and Australian standards.",
+  alternates: {
+    canonical: "https://abrahamonlineacademy.vercel.app/courses",
+  },
+};
+
+// Define the type for your subjects to prevent TypeScript 'any' errors
+interface Subject {
+  name: string;
+  icon: React.ElementType;
+  desc: string;
+  accent: string;
+  href?: string;
+}
+
+const subjects: Subject[] = [
   { 
     name: "Mathematics", 
     icon: FaSquareRootAlt, 
     desc: "Algebra, Calculus & Geometry tailored to your regional curriculum.",
-    accent: "from-blue-600 to-indigo-600"
+    accent: "from-blue-600 to-indigo-600",
+    href: "/courses/mathematics"
   },
   { 
     name: "Physics", 
     icon: FaAtom, 
     desc: "Mechanics, energy, electricity, and wave theory simplified.",
-    accent: "from-purple-600 to-indigo-600"
+    accent: "from-purple-600 to-indigo-600",
+    href: "/courses/physics"
   },
   { 
     name: "Chemistry", 
     icon: FaFlask, 
     desc: "Atomic models, stoichiometry, and organic reactions step-by-step.",
-    accent: "from-emerald-600 to-teal-600"
+    accent: "from-emerald-600 to-teal-600",
+    href: "/courses/chemistry"
   },
   { 
     name: "Computer Science", 
     icon: FaLaptopCode, 
     desc: "Python programming, computational logic, and digital literacy.",
-    accent: "from-cyan-600 to-blue-600"
+    accent: "from-cyan-600 to-blue-600",
+    href: "/courses/coding"
   },
   { 
     name: "English Language", 
     icon: FaBookOpen, 
     desc: "Grammar, literature analysis, and expressive creative writing.",
-    accent: "from-amber-600 to-orange-600"
+    accent: "from-amber-600 to-orange-600",
+    href: "/courses/english"
   },
   { 
     name: "Urdu Language", 
     icon: FaPenNib, 
     desc: "Reading comprehension, formal writing, and conversational fluency.",
-    accent: "from-teal-600 to-emerald-600"
+    accent: "from-teal-600 to-emerald-600",
+    href: "/courses/urdu"
   },
   { 
     name: "Islamiat & Hifz", 
     icon: FaMosque, 
     desc: "Quran recitation, Tajweed rules, ethics, and foundational history.",
-    accent: "from-amber-500 to-yellow-600"
+    accent: "from-amber-500 to-yellow-600",
+    href: "/courses/islamiat"
   },
   { 
     name: "Biology", 
     icon: FaDna, 
     desc: "Cell biology, physiology, genetics, and living systems.",
-    accent: "from-rose-600 to-pink-600"
+    accent: "from-rose-600 to-pink-600",
+    href: "/courses/biology"
   },
 ];
 
@@ -99,7 +116,6 @@ export default function Courses() {
       
       {/* 1. COMPACT HERO HEADER */}
       <section className="relative overflow-hidden bg-[#0A192F] py-10 px-2 text-center text-white">
-        {/* Soft Amber Ambient Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10 max-w-2xl mx-auto space-y-3">
@@ -164,17 +180,16 @@ export default function Courses() {
           {subjects.map((subject, index) => {
             const Icon = subject.icon;
             return (
-              <div 
+              <Link 
                 key={index}
+                href={subject.href || "#"}
                 className="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-slate-300 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  {/* Icon */}
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${subject.accent} flex items-center justify-center text-white text-xl shadow-md mb-5 group-hover:scale-105 transition-transform duration-300`}>
                     <Icon />
                   </div>
 
-                  {/* Title & Description */}
                   <h3 className="text-lg font-bold text-[#0A192F] mb-2 group-hover:text-amber-600 transition-colors">
                     {subject.name}
                   </h3>
@@ -183,12 +198,11 @@ export default function Courses() {
                   </p>
                 </div>
 
-                {/* Footer link */}
                 <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-400 group-hover:text-[#0A192F] transition-colors">
                   <span>Grade 1 – 12</span>
                   <FaArrowRight className="text-[10px] transition-transform duration-200 group-hover:translate-x-1 text-amber-500" />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -198,7 +212,6 @@ export default function Courses() {
       <section className="bg-slate-50 border-t border-slate-200/70 py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left Highlights */}
           <div className="lg:col-span-7 space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200/70 px-3 py-1 rounded-full">
               Why Learn With Us
@@ -218,7 +231,6 @@ export default function Courses() {
             </div>
           </div>
 
-          {/* Right Direct CTA Card */}
           <div className="lg:col-span-5 bg-[#0A192F] rounded-2xl p-7 text-center text-white shadow-lg space-y-4 border border-slate-800">
             <h4 className="text-xl font-bold">Have Questions or Special Requests?</h4>
             <p className="text-slate-300 text-xs leading-relaxed">
