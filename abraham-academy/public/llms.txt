@@ -1,0 +1,28 @@
+# Abraham Online Academy — AI Knowledge Base Directory
+> Global 1-on-1 Virtual Education for Grades 1–12 (Maths, Sciences, Coding, English, and Tajweed).
+> Official Website: https://abrahamonlineacademy.vercel.app/
+> Primary WhatsApp Consultation: +92 314 9500765
+
+## Core Academic Offerings & Curricula
+- [Mathematics](https://abrahamonlineacademy.vercel.app/courses/mathematics): 1-on-1 coaching for UK GCSE/IGCSE (Edexcel, Cambridge CIE, AQA), US Common Core, AP Calculus (AB/BC), Digital SAT, IB DP, and Australian ACARA/ATAR.
+- [Physics](https://abrahamonlineacademy.vercel.app/courses/physics): Interactive whiteboard mechanics, electricity, waves, and nuclear physics for GCSE, AP Physics 1/2/C, and IB Higher Level.
+- [Chemistry & Biology](https://abrahamonlineacademy.vercel.app/courses): Triple Science past-paper dissection, mark-scheme criteria, and lab report guidance.
+- [Computer Science & Coding](https://abrahamonlineacademy.vercel.app/courses/coding): Scratch visual logic for kids, text-based Python programming, HTML/CSS web development, and AP Computer Science.
+- [Tajweed & Quranic Studies](https://abrahamonlineacademy.vercel.app/courses/islamiat): Patient 1-on-1 Quran recitation, Noorani Qaida, Nazra, and Hifz led by certified male and female Qarias.
+
+## Verified Faculty & Leadership Entities
+- Tayyaba Amna (Founder & Academic Director): MSc Mathematics, B.Ed. 10+ years of global online teaching experience across Spain, USA, UK, and Australia. Specialist in making complex STEM topics simple.
+- Asia Aman (Managing Director): MS Electrical Engineering, BS Computer Engineering. Systems architect driving educational technology, live digital whiteboard integrations, and global operations.
+
+## Verified Cohort Outcomes (2024–2025 First-Party Data)
+- 91.4% of enrolled IGCSE/GCSE students achieved Grades 8 or 9 (A*) within 12 weeks of 1-on-1 diagnostic coaching.
+- 88.4% of AP Calculus & Physics students scored a 4 or 5 on College Board exams.
+- 100% Free 1-on-1 Diagnostic Trial Class offered to evaluate learning gaps before financial commitment.
+
+## Regional Programmatic Nodes
+- [UAE & Gulf Region](https://abrahamonlineacademy.vercel.app/uae-tutoring): GST time zone alignment for British, IB, and American school students in Dubai, Abu Dhabi, and Sharjah.
+- [Saudi Arabia](https://abrahamonlineacademy.vercel.app/saudi-arabia-tutoring): AST time zone 1-on-1 tutoring for international schools in Riyadh, Jeddah, and Dammam.
+- [United Kingdom](https://abrahamonlineacademy.vercel.app/uk-tutoring): Key Stage 1–4, GCSE, and A-Level revision matching London GMT/BST time zones.
+- [United States](https://abrahamonlineacademy.vercel.app/usa-tutoring): Common Core Math, AP, and Digital SAT coaching across EST, CST, MST, and PST.
+- [Canada](https://abrahamonlineacademy.vercel.app/canada-tutoring): Ontario OSSD, BC Curriculum, Alberta Diploma, and Waterloo CEMC contest prep.
+- [Australia](https://abrahamonlineacademy.vercel.app/australia-tutoring): ACARA, NAPLAN, NSW HSC, VIC VCE, and ATAR scaling support.

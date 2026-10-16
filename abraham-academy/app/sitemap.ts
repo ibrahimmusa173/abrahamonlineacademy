@@ -1,11 +1,11 @@
-import { MetadataRoute } from "next";
-import { coursesData } from "@/lib/courses-data";
-import { blogPosts } from "@/lib/blog-data";
+import { MetadataRoute } from 'next';
+import { coursesData } from '@/lib/courses-data';
+import { blogPosts } from '@/lib/blog-data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://abrahamonlineacademy.vercel.app";
 
-  // 1. Core Static Pages & Dedicated Landing Pages
+  // 1. Static Core Pages
   const staticRoutes = [
     "",
     "/about",
@@ -14,6 +14,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/blog",
     "/usa-tutoring",
     "/uae-tutoring",
+    "/uk-tutoring",
+    "/canada-tutoring",
+    "/australia-tutoring",
+    "/saudi-arabia-tutoring",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
@@ -21,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === "" ? 1.0 : 0.8,
   }));
 
-  // 2. All 8 Dynamic Subject Course Pages
+  // 2. Dynamic Subject Course Pages
   const courseRoutes = Object.keys(coursesData).map((slug) => ({
     url: `${baseUrl}/courses/${slug}`,
     lastModified: new Date().toISOString(),
@@ -29,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  // 3. Country Landing Page Routes
+  // 3. Dynamic Country Landing Pages
   const countryRoutes = [
     "/landing/usa",
     "/landing/uae",
@@ -44,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // 4. Dynamic Blog Post Articles
+  // 4. Dynamic Blog Posts
   const blogRoutes = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date().toISOString(),
