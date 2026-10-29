@@ -29,7 +29,7 @@ export default function Footer() {
             },
             { 
               icon: <FaInstagram />, 
-              link: "https://www.instagram.com/musa.aman.9883739", 
+              link: "https://www.instagram.com/abrahamonlineacademy", 
               color: "hover:bg-pink-600",
               ariaLabel: "Follow us on Instagram" 
             },
