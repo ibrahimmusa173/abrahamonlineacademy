@@ -136,7 +136,7 @@ export default async function DynamicCoursePage({ params }: Props) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {course.pillars.map((pillar, index) => (
+            {course.pillars?.map((pillar, index) => (
               <div key={index} className="bg-white p-6 rounded-2xl border border-slate-200 space-y-2">
                 <h3 className="font-bold text-slate-900 text-base">{pillar.name}</h3>
                 <p className="text-slate-600 text-xs sm:text-sm">{pillar.detail}</p>
@@ -158,7 +158,7 @@ export default async function DynamicCoursePage({ params }: Props) {
         </div>
 
         <div className="space-y-6">
-          {course.agePhases.map((phase, index) => (
+          {course.agePhases?.map((phase, index) => (
             <div key={index} className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-6 items-start">
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0 ${phase.iconColor}`}>
                 {index === 0 ? <FaUserGraduate /> : index === 1 ? <FaChalkboardTeacher /> : <FaCalculator />}
