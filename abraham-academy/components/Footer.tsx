@@ -17,7 +17,7 @@ export default function Footer() {
             },
             { 
               icon: <FaLinkedinIn />, 
-              link: "linkedin.com/company/abraham-online-academy", 
+              link: "https://www.linkedin.com/company/abraham-online-academy", 
               color: "hover:bg-blue-700",
               ariaLabel: "Connect with us on LinkedIn" 
             },
